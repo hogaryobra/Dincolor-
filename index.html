@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dincolor - Pinturerías Rosario</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1A1A1A; line-height: 1.6; background: #fff; }
+
+/* HERO */
+.dc-hero { background: #1A1A1A; color: #fff; padding: 80px 24px 90px; text-align: center; border-bottom: 4px solid #4A2D5C; position: relative; overflow: hidden; }
+.dc-hero::before { content: ""; position: absolute; top: -50%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(74,45,92,0.35) 0%, transparent 70%); pointer-events: none; }
+.dc-logo { font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-bottom: 6px; position: relative; }
+.dc-logo span { color: #B89DD0; }
+.dc-tagline { color: #888; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 36px; position: relative; }
+.dc-hero h1 { font-size: 38px; font-weight: 800; line-height: 1.15; margin: 0 auto 16px; max-width: 700px; letter-spacing: -1px; position: relative; }
+.dc-hero h1 em { color: #B89DD0; font-style: normal; }
+.dc-hero p { font-size: 17px; color: #ccc; max-width: 560px; margin: 0 auto 32px; position: relative; }
+.dc-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+.dc-btn { display: inline-block; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease; cursor: pointer; border: none; }
+.dc-btn-primary { background: #4A2D5C; color: #fff; }
+.dc-btn-primary:hover { background: #5d3973; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74,45,92,0.4); }
+.dc-btn-secondary { background: transparent; color: #fff; border: 2px solid #fff; }
+.dc-btn-secondary:hover { background: #fff; color: #1A1A1A; }
+
+/* CATEGORÍAS VERTICALES */
+.dc-vcat-section { padding: 50px 24px; max-width: 1200px; margin: 0 auto; }
+.dc-vcat-stack { display: flex; flex-direction: column; gap: 16px; }
+.dc-vcat { position: relative; border-radius: 14px; overflow: hidden; height: 220px; text-decoration: none; display: block; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.dc-vcat:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.25); }
+.dc-vcat-img { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.5s ease; }
+.dc-vcat:hover .dc-vcat-img { transform: scale(1.05); }
+.dc-vcat-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(26,26,26,0.7) 0%, rgba(26,26,26,0.3) 60%, rgba(26,26,26,0.1) 100%); }
+.dc-vcat-content { position: absolute; inset: 0; display: flex; align-items: center; padding: 0 40px; }
+.dc-vcat-content h3 { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+.dc-vcat-arrow { position: absolute; top: 50%; right: 30px; transform: translateY(-50%); background: rgba(74,45,92,0.9); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+.dc-vcat:hover .dc-vcat-arrow { opacity: 1; }
+.dc-vcat-arrow svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; }
+
+/* POR QUÉ DINCOLOR */
+.dc-why { background: #f7f5f9; padding: 70px 24px; }
+.dc-why-inner { max-width: 1200px; margin: 0 auto; }
+.dc-section-title { text-align: center; margin-bottom: 8px; font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
+.dc-section-subtitle { text-align: center; color: #777; font-size: 15px; margin-bottom: 40px; }
+.dc-why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 40px; }
+.dc-why-item { background: #fff; padding: 28px 24px; border-radius: 10px; border-left: 4px solid #4A2D5C; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.dc-why-item:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(74,45,92,0.15); }
+.dc-why-item h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #1A1A1A; }
+.dc-why-item p { color: #555; font-size: 14px; margin: 0; }
+
+/* CTA SECTION */
+.dc-cta-section { background: #1A1A1A; color: #fff; padding: 60px 24px; text-align: center; position: relative; overflow: hidden; }
+.dc-cta-section::before { content: ""; position: absolute; top: -100%; left: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(74,45,92,0.4) 0%, transparent 70%); pointer-events: none; }
+.dc-cta-section h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; position: relative; }
+.dc-cta-section p { color: #ccc; font-size: 16px; max-width: 500px; margin: 0 auto 24px; position: relative; }
+.dc-cta-section .dc-btn { position: relative; }
+
+/* UBICACIÓN */
+.dc-location { padding: 70px 24px; max-width: 1200px; margin: 0 auto; text-align: center; }
+.dc-location-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 32px 24px; max-width: 500px; margin: 30px auto 0; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
+.dc-location-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+.dc-location-row { display: flex; align-items: center; justify-content: center; gap: 10px; color: #555; margin-bottom: 8px; font-size: 15px; }
+.dc-location-row svg { width: 18px; height: 18px; stroke: #4A2D5C; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.dc-location-row a { color: #4A2D5C; text-decoration: none; font-weight: 600; }
+
+/* FOOTER */
+.dc-footer { background: #0F0F0F; color: #888; padding: 40px 24px 24px; text-align: center; font-size: 13px; }
+.dc-footer-logo { color: #fff; font-size: 22px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+.dc-footer-logo span { color: #B89DD0; }
+.dc-footer-line { color: #ccc; margin-bottom: 16px; }
+.dc-copy { margin-top: 16px; color: #555; font-size: 12px; }
+
+/* WHATSAPP FLOTANTE */
+.dc-wa { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: #fff; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(37,211,102,0.4); z-index: 999; transition: transform 0.2s; }
+.dc-wa:hover { transform: scale(1.1) rotate(8deg); }
+.dc-wa svg { width: 30px; height: 30px; fill: #fff; }
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .dc-hero { padding: 60px 20px 70px; }
+  .dc-hero h1 { font-size: 28px; }
+  .dc-hero p { font-size: 15px; }
+  .dc-vcat-section { padding: 40px 20px; }
+  .dc-vcat { height: 160px; }
+  .dc-vcat-content { padding: 0 24px; }
+  .dc-vcat-content h3 { font-size: 26px; }
+  .dc-vcat-arrow { opacity: 1; width: 36px; height: 36px; right: 18px; }
+  .dc-section-title { font-size: 24px; }
+  .dc-why { padding: 50px 20px; }
+  .dc-cta-section h2 { font-size: 22px; }
+  .dc-logo { font-size: 32px; }
+  .dc-location { padding: 50px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="dc-hero">
+  <div class="dc-logo">DIN<span>COLOR</span></div>
+  <div class="dc-tagline">PINTURERÍAS · ROSARIO</div>
+  <h1>Calidad <em>premium</em> al precio que merecés</h1>
+  <p>Distribuidora de pinturas en Rosario. Asesoramiento técnico real, formulación propia y las mejores marcas del mercado.</p>
+  <div class="dc-cta-row">
+    <a href="#categorias" class="dc-btn dc-btn-primary">VER PRODUCTOS</a>
+    <a href="https://wa.me/5493413113046" class="dc-btn dc-btn-secondary">CONSULTAR POR WHATSAPP</a>
+  </div>
+</section>
+
+<!-- CATEGORÍAS VERTICALES -->
+<section class="dc-vcat-section" id="categorias">
+  <div class="dc-vcat-stack">
+
+    <a href="#hogar" class="dc-vcat">
+      <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0244.jpeg');"></div>
+      <div class="dc-vcat-overlay"></div>
+      <div class="dc-vcat-content">
+        <h3>Hogar y Obra</h3>
+      </div>
+      <div class="dc-vcat-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="#maderas" class="dc-vcat">
+      <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0237.webp');"></div>
+      <div class="dc-vcat-overlay"></div>
+      <div class="dc-vcat-content">
+        <h3>Maderas</h3>
+      </div>
+      <div class="dc-vcat-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="#nautica" class="dc-vcat">
+      <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0238.jpeg');"></div>
+      <div class="dc-vcat-overlay"></div>
+      <div class="dc-vcat-content">
+        <h3>Náutica</h3>
+      </div>
+      <div class="dc-vcat-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="#industria" class="dc-vcat">
+      <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0242.jpeg');"></div>
+      <div class="dc-vcat-overlay"></div>
+      <div class="dc-vcat-content">
+        <h3>Industria</h3>
+      </div>
+      <div class="dc-vcat-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="#automotor" class="dc-vcat">
+      <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0243.jpeg');"></div>
+      <div class="dc-vcat-overlay"></div>
+      <div class="dc-vcat-content">
+        <h3>Automotor</h3>
+      </div>
+      <div class="dc-vcat-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- POR QUÉ DINCOLOR -->
+<section class="dc-why">
+  <div class="dc-why-inner">
+    <h2 class="dc-section-title">¿Por qué Dincolor?</h2>
+    <p class="dc-section-subtitle">Lo que nos diferencia del resto</p>
+    <div class="dc-why-grid">
+      <div class="dc-why-item">
+        <h3>Formulación propia</h3>
+        <p>Trabajamos pintura para auto con básicos, controlando la calidad desde la fórmula.</p>
+      </div>
+      <div class="dc-why-item">
+        <h3>Asesoramiento técnico real</h3>
+        <p>Atención personalizada de gente que sabe del producto, no vendedores improvisados.</p>
+      </div>
+      <div class="dc-why-item">
+        <h3>Mejor precio del mercado</h3>
+        <p>Hasta 20% más barato que la competencia, sin resignar calidad.</p>
+      </div>
+      <div class="dc-why-item">
+        <h3>Producto fresco</h3>
+        <p>Stock que rota constantemente, no pintura vieja parada en depósito.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA WHATSAPP -->
+<section class="dc-cta-section">
+  <h2>¿Necesitás asesoramiento?</h2>
+  <p>Escribinos por WhatsApp y te ayudamos a elegir el producto justo para tu obra.</p>
+  <a href="https://wa.me/5493413113046" class="dc-btn dc-btn-primary">HABLAR POR WHATSAPP</a>
+</section>
+
+<!-- UBICACIÓN -->
+<section class="dc-location">
+  <h2 class="dc-section-title">Dónde encontrarnos</h2>
+  <p class="dc-section-subtitle">Te esperamos en el local</p>
+  <div class="dc-location-card">
+    <h3>Pinturerías Dincolor</h3>
+    <div class="dc-location-row">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Rosario, Santa Fe</span>
+    </div>
+    <div class="dc-location-row">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <a href="tel:+5493413113046">+54 9 3413 11-3046</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="dc-footer">
+  <div class="dc-footer-logo">DIN<span>COLOR</span></div>
+  <div class="dc-footer-line">Pinturerías Dincolor · Rosario, Argentina</div>
+  <div class="dc-copy">© 2026 Dincolor · Todos los derechos reservados</div>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/5493413113046" class="dc-wa" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+</body>
+</html>
