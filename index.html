@@ -40,6 +40,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 .dc-scroll-hint { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); width: 1px; height: 50px; background: rgba(255,255,255,0.5); overflow: hidden; }
 .dc-scroll-hint::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: #fff; animation: scrollIndicator 2s ease-in-out infinite; }
 
+.dc-vcat-section { padding: 90px 24px; max-width: 1300px; margin: 0 auto; }
+.dc-vcat-intro { text-align: center; margin-bottom: 50px; }
+.dc-vcat-intro-tag { font-size: 11px; letter-spacing: 5px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 14px; }
+.dc-vcat-intro h2 { font-size: 38px; font-weight: 300; letter-spacing: -0.5px; color: #1A1A1A; }
+.dc-vcat-intro h2 em { font-style: italic; color: #4A2D5C; font-family: Georgia, serif; }
+
+.dc-vcat-hero { position: relative; border-radius: 4px; overflow: hidden; height: 420px; text-decoration: none; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
+.dc-vcat-hero.visible { opacity: 1; transform: translateY(0); }
+.dc-vcat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.dc-vcat-small { position: relative; border-radius: 4px; overflow: hidden; height: 260px; text-decoration: none; display: block; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
+.dc-vcat-small.visible { opacity: 1; transform: translateY(0); }
+.dc-vcat-img { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1); }
+.dc-vcat-hero:hover .dc-vcat-img, .dc-vcat-small:hover .dc-vcat-img { transform: scale(1.08); }
+.dc-vcat-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.7) 100%); transition: background 0.6s ease; }
+.dc-vcat-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 35px 40px; color: #fff; z-index: 2; }
+.dc-vcat-tag { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 8px; display: block; }
+.dc-vcat-hero .dc-vcat-content h3 { font-size: 42px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+.dc-vcat-small .dc-vcat-content h3 { font-size: 26px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.3); }
+.dc-vcat-link { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fff; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0); transition: all 0.4s ease; }
+.dc-vcat-hero:hover .dc-vcat-link, .dc-vcat-small:hover .dc-vcat-link { border-bottom-color: #fff; letter-spacing: 4px; }
+
 .dc-stats { background: #1A1A1A; color: #fff; padding: 80px 24px; position: relative; overflow: hidden; }
 .dc-stats::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #444, transparent); }
 .dc-stats-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
@@ -49,51 +70,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 .dc-stat-plus { color: #fff; font-weight: 300; }
 .dc-stat-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 3px; }
 
-.dc-vcat-section { padding: 90px 24px; max-width: 1300px; margin: 0 auto; }
-.dc-vcat-intro { text-align: center; margin-bottom: 50px; }
-.dc-vcat-intro-tag { font-size: 11px; letter-spacing: 5px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 14px; }
-.dc-vcat-intro h2 { font-size: 38px; font-weight: 300; letter-spacing: -0.5px; color: #1A1A1A; }
-.dc-vcat-intro h2 em { font-style: italic; color: #4A2D5C; font-family: Georgia, serif; }
+/* SECCIÓN EDITORIAL - POR QUÉ DINCOLOR */
+.dc-editorial { padding: 0; background: #fff; }
+.dc-editorial-block { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; opacity: 0; transform: translateY(40px); transition: opacity 1s ease, transform 1s ease; }
+.dc-editorial-block.visible { opacity: 1; transform: translateY(0); }
+.dc-editorial-block.reverse { direction: rtl; }
+.dc-editorial-block.reverse > * { direction: ltr; }
+.dc-editorial-img { background-size: cover; background-position: center; min-height: 500px; }
+.dc-editorial-text { padding: 100px 80px; display: flex; flex-direction: column; justify-content: center; background: #fafafa; }
+.dc-editorial-block:nth-child(even) .dc-editorial-text { background: #fff; }
+.dc-editorial-tag { font-size: 11px; letter-spacing: 5px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 20px; }
+.dc-editorial-title { font-size: 44px; font-weight: 300; letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 24px; color: #1A1A1A; }
+.dc-editorial-title em { font-style: italic; color: #4A2D5C; font-family: Georgia, serif; }
+.dc-editorial-text p { font-size: 16px; color: #555; line-height: 1.8; max-width: 480px; }
 
-.dc-vcat-hero { position: relative; border-radius: 4px; overflow: hidden; height: 420px; text-decoration: none; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
-.dc-vcat-hero.visible { opacity: 1; transform: translateY(0); }
-
-.dc-vcat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.dc-vcat-small { position: relative; border-radius: 4px; overflow: hidden; height: 260px; text-decoration: none; display: block; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
-.dc-vcat-small.visible { opacity: 1; transform: translateY(0); }
-
-.dc-vcat-img { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1); }
-.dc-vcat-hero:hover .dc-vcat-img, .dc-vcat-small:hover .dc-vcat-img { transform: scale(1.08); }
-
-.dc-vcat-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.7) 100%); transition: background 0.6s ease; }
-
-.dc-vcat-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 35px 40px; color: #fff; z-index: 2; }
-.dc-vcat-tag { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 8px; display: block; }
-.dc-vcat-hero .dc-vcat-content h3 { font-size: 42px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
-.dc-vcat-small .dc-vcat-content h3 { font-size: 26px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.3); }
-.dc-vcat-link { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fff; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0); transition: all 0.4s ease; }
-.dc-vcat-hero:hover .dc-vcat-link, .dc-vcat-small:hover .dc-vcat-link { border-bottom-color: #fff; letter-spacing: 4px; }
-
-.dc-why { background: #fafafa; padding: 90px 24px; position: relative; }
-.dc-why-inner { max-width: 1200px; margin: 0 auto; }
-.dc-section-title { text-align: center; margin-bottom: 8px; font-size: 38px; font-weight: 300; letter-spacing: -0.5px; }
-.dc-section-title em { font-style: italic; color: #4A2D5C; font-family: Georgia, serif; }
-.dc-section-subtitle { text-align: center; color: #888; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 50px; }
-.dc-why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 40px; }
-
-.dc-flip { perspective: 1000px; height: 220px; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.dc-flip.visible { opacity: 1; transform: translateY(0); }
-.dc-flip-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
-.dc-flip:hover .dc-flip-inner { transform: rotateY(180deg); }
-.dc-flip-front, .dc-flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 4px; padding: 32px 28px; display: flex; flex-direction: column; justify-content: center; }
-.dc-flip-front { background: #fff; border: 1px solid #eee; }
-.dc-flip-back { background: #1A1A1A; color: #fff; transform: rotateY(180deg); text-align: center; align-items: center; }
-.dc-flip-front h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #1A1A1A; letter-spacing: 0.5px; }
-.dc-flip-front p { color: #666; font-size: 14px; margin: 0; }
-.dc-flip-icon { font-size: 32px; margin-bottom: 14px; }
-.dc-flip-back h4 { font-size: 16px; font-weight: 600; margin-bottom: 12px; letter-spacing: 1px; }
-.dc-flip-back p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
-
+/* CTA */
 .dc-cta-section { background: #1A1A1A; color: #fff; padding: 90px 24px; text-align: center; position: relative; overflow: hidden; }
 .dc-cta-section h2 { font-size: 36px; font-weight: 300; margin-bottom: 14px; letter-spacing: -0.5px; }
 .dc-cta-section h2 em { font-style: italic; color: #B89DD0; font-family: Georgia, serif; }
@@ -102,25 +93,45 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 .dc-cta-btn:hover { background: #25D366; border-color: #25D366; letter-spacing: 5px; }
 .dc-cta-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-.dc-location { padding: 90px 24px; max-width: 1200px; margin: 0 auto; text-align: center; }
-.dc-location-card { background: #fff; border: 1px solid #eee; border-radius: 4px; padding: 50px 32px; max-width: 500px; margin: 30px auto 0; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.dc-location-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(74,45,92,0.1); }
-.dc-location-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 24px; letter-spacing: 1px; }
-.dc-location-row { display: flex; align-items: center; justify-content: center; gap: 12px; color: #555; margin-bottom: 12px; font-size: 14px; }
-.dc-location-row svg { width: 18px; height: 18px; stroke: #4A2D5C; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-.dc-location-row a { color: #4A2D5C; text-decoration: none; font-weight: 600; }
+/* UBICACIÓN CON MAPA */
+.dc-location { padding: 100px 0 0; background: #fff; }
+.dc-location-intro { text-align: center; padding: 0 24px 50px; max-width: 700px; margin: 0 auto; }
+.dc-location-tag { font-size: 11px; letter-spacing: 5px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 14px; }
+.dc-location-title { font-size: 38px; font-weight: 300; letter-spacing: -0.5px; margin-bottom: 16px; }
+.dc-location-title em { font-style: italic; color: #4A2D5C; font-family: Georgia, serif; }
+.dc-location-desc { color: #777; font-size: 14px; letter-spacing: 0.5px; }
+
+.dc-location-info { background: #fafafa; padding: 50px 24px; text-align: center; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+.dc-location-info-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; }
+.dc-location-item { padding: 0 20px; }
+.dc-location-item-label { font-size: 10px; letter-spacing: 4px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 12px; }
+.dc-location-item-value { font-size: 15px; color: #333; line-height: 1.6; font-weight: 500; }
+.dc-location-item-value a { color: #333; text-decoration: none; transition: color 0.3s ease; }
+.dc-location-item-value a:hover { color: #4A2D5C; }
+
+.dc-map { width: 100%; height: 450px; border: none; }
 
 .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-.dc-footer { background: #0F0F0F; color: #888; padding: 60px 24px 30px; text-align: center; font-size: 12px; }
-.dc-footer-logo { color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 10px; letter-spacing: 4px; }
-.dc-footer-line { color: #ccc; margin-bottom: 20px; letter-spacing: 1px; font-size: 13px; }
-.dc-copy { margin-top: 20px; color: #555; font-size: 11px; letter-spacing: 2px; }
+/* FOOTER MINIMALISTA */
+.dc-footer { background: #0a0a0a; color: #888; padding: 100px 24px 50px; text-align: center; }
+.dc-footer-logo { color: #fff; font-size: 56px; font-weight: 300; letter-spacing: 12px; margin-bottom: 30px; }
+.dc-footer-logo strong { font-weight: 800; }
+.dc-footer-divider { width: 60px; height: 1px; background: #444; margin: 30px auto; }
+.dc-copy { color: #666; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
 
 .dc-wa { position: fixed; bottom: 24px; right: 24px; background: #25D366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(37,211,102,0.5); z-index: 999; transition: all 0.3s ease; animation: pulse 2s ease-in-out infinite; }
 .dc-wa:hover { transform: scale(1.1) rotate(8deg); animation: none; }
 .dc-wa svg { width: 32px; height: 32px; fill: #fff; }
+
+@media (max-width: 900px) {
+  .dc-editorial-block { grid-template-columns: 1fr; }
+  .dc-editorial-block.reverse { direction: ltr; }
+  .dc-editorial-img { min-height: 350px; order: -1; }
+  .dc-editorial-text { padding: 60px 30px; }
+  .dc-editorial-title { font-size: 32px; }
+}
 
 @media (max-width: 700px) {
   .dc-header { padding: 16px 20px; }
@@ -133,21 +144,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   .dc-hero-sub { font-size: 9px; letter-spacing: 4px; }
   .dc-hero-bottom { padding-bottom: 60px; }
   .dc-hero-title { font-size: 22px; }
-  .dc-stats { padding: 60px 20px; }
-  .dc-stat-number { font-size: 44px; }
   .dc-vcat-section { padding: 60px 20px; }
-  .dc-vcat-intro h2, .dc-section-title { font-size: 28px; }
+  .dc-vcat-intro h2 { font-size: 28px; }
   .dc-vcat-grid { grid-template-columns: 1fr; gap: 16px; }
   .dc-vcat-hero { height: 280px; margin-bottom: 16px; }
   .dc-vcat-small { height: 220px; }
   .dc-vcat-content { padding: 26px 28px; }
   .dc-vcat-hero .dc-vcat-content h3 { font-size: 30px; }
   .dc-vcat-small .dc-vcat-content h3 { font-size: 22px; }
-  .dc-why { padding: 70px 20px; }
+  .dc-stats { padding: 60px 20px; }
+  .dc-stat-number { font-size: 44px; }
+  .dc-editorial-text { padding: 50px 24px; }
+  .dc-editorial-title { font-size: 26px; }
   .dc-cta-section { padding: 70px 20px; }
   .dc-cta-section h2 { font-size: 26px; }
-  .dc-location { padding: 60px 20px; }
-  .dc-flip { height: 200px; }
+  .dc-location { padding: 70px 0 0; }
+  .dc-location-title { font-size: 28px; }
+  .dc-location-info { padding: 40px 20px; }
+  .dc-location-info-grid { gap: 30px; }
+  .dc-map { height: 350px; }
+  .dc-footer { padding: 60px 20px 40px; }
+  .dc-footer-logo { font-size: 32px; letter-spacing: 6px; }
 }
 </style>
 </head>
@@ -232,29 +249,45 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   </div>
 </section>
 
-<section class="dc-why">
-  <div class="dc-why-inner">
-    <h2 class="dc-section-title fade-in">¿Por qué <em>Dincolor</em>?</h2>
-    <p class="dc-section-subtitle fade-in">Lo que nos diferencia</p>
-    <div class="dc-why-grid">
-      <div class="dc-flip"><div class="dc-flip-inner">
-        <div class="dc-flip-front"><div class="dc-flip-icon">🧪</div><h3>Formulación propia</h3><p>Trabajamos pintura para auto con básicos.</p></div>
-        <div class="dc-flip-back"><h4>Calidad controlada</h4><p>Nosotros mismos formulamos. Sabemos qué hay en cada balde porque lo hicimos nosotros.</p></div>
-      </div></div>
-      <div class="dc-flip"><div class="dc-flip-inner">
-        <div class="dc-flip-front"><div class="dc-flip-icon">🎯</div><h3>Asesoramiento real</h3><p>Atención de gente que sabe.</p></div>
-        <div class="dc-flip-back"><h4>Expertos del rubro</h4><p>No vendedores improvisados. Te decimos exactamente qué necesitás para tu obra.</p></div>
-      </div></div>
-      <div class="dc-flip"><div class="dc-flip-inner">
-        <div class="dc-flip-front"><div class="dc-flip-icon">💰</div><h3>Mejor precio</h3><p>Hasta 20% más barato.</p></div>
-        <div class="dc-flip-back"><h4>Sin resignar calidad</h4><p>Trabajamos directo con fábrica. Te pasamos el ahorro a vos, no al intermediario.</p></div>
-      </div></div>
-      <div class="dc-flip"><div class="dc-flip-inner">
-        <div class="dc-flip-front"><div class="dc-flip-icon">📦</div><h3>Producto fresco</h3><p>Stock que rota constantemente.</p></div>
-        <div class="dc-flip-back"><h4>Nada parado</h4><p>No vendemos pintura vieja. Renovamos stock todas las semanas.</p></div>
-      </div></div>
+<!-- EDITORIAL: POR QUÉ DINCOLOR -->
+<section class="dc-editorial">
+
+  <div class="dc-editorial-block">
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1607400201515-c2c41c07d307?w=1200&q=85');"></div>
+    <div class="dc-editorial-text">
+      <div class="dc-editorial-tag">Capítulo 01</div>
+      <h2 class="dc-editorial-title">Formulación <em>propia</em></h2>
+      <p>Trabajamos pintura para auto con básicos. Nosotros mismos formulamos cada producto, controlando la calidad desde el origen. Sabemos exactamente qué hay en cada balde porque lo hicimos nosotros, en nuestro propio laboratorio.</p>
     </div>
   </div>
+
+  <div class="dc-editorial-block reverse">
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1200&q=85');"></div>
+    <div class="dc-editorial-text">
+      <div class="dc-editorial-tag">Capítulo 02</div>
+      <h2 class="dc-editorial-title">Asesoramiento <em>real</em></h2>
+      <p>No vendedores improvisados. Atención personalizada de gente que sabe del oficio. Te decimos exactamente qué necesitás para tu obra, sin vueltas, sin promesas vacías. Más de 48 años de experiencia detrás de cada recomendación.</p>
+    </div>
+  </div>
+
+  <div class="dc-editorial-block">
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&q=85');"></div>
+    <div class="dc-editorial-text">
+      <div class="dc-editorial-tag">Capítulo 03</div>
+      <h2 class="dc-editorial-title">Mejor <em>precio</em> del mercado</h2>
+      <p>Hasta 20% más barato que la competencia, sin resignar calidad. Trabajamos directo con fábrica y te pasamos el ahorro a vos, no al intermediario. Calidad premium que tu obra merece, al precio justo.</p>
+    </div>
+  </div>
+
+  <div class="dc-editorial-block reverse">
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85');"></div>
+    <div class="dc-editorial-text">
+      <div class="dc-editorial-tag">Capítulo 04</div>
+      <h2 class="dc-editorial-title">Producto <em>fresco</em></h2>
+      <p>Stock que rota constantemente. No vendemos pintura vieja parada en depósito. Renovamos inventario todas las semanas para que cada producto que sale de nuestro local esté en su punto óptimo de aplicación.</p>
+    </div>
+  </div>
+
 </section>
 
 <section class="dc-cta-section">
@@ -266,30 +299,38 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   </a>
 </section>
 
+<!-- UBICACIÓN CON MAPA -->
 <section class="dc-location">
-  <h2 class="dc-section-title fade-in">Dónde <em>encontrarnos</em></h2>
-  <p class="dc-section-subtitle fade-in">Te esperamos en el local</p>
-  <div class="dc-location-card fade-in">
-    <h3>Pinturerías Dincolor</h3>
-    <div class="dc-location-row">
-      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span>San Nicolás 2949, Rosario</span>
-    </div>
-    <div class="dc-location-row">
-      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      <a href="tel:+5493417760680">+54 341 776-0680</a>
-    </div>
-    <div class="dc-location-row">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>Lun a Vie: 8-12:15 / 14-18:30 · Sáb: 8-12:30</span>
+  <div class="dc-location-intro fade-in">
+    <div class="dc-location-tag">Visitanos</div>
+    <h2 class="dc-location-title">Dónde <em>encontrarnos</em></h2>
+    <p class="dc-location-desc">Te esperamos en el local de Rosario</p>
+  </div>
+
+  <div class="dc-location-info">
+    <div class="dc-location-info-grid">
+      <div class="dc-location-item">
+        <div class="dc-location-item-label">Dirección</div>
+        <div class="dc-location-item-value">San Nicolás 2949<br>Rosario, Santa Fe</div>
+      </div>
+      <div class="dc-location-item">
+        <div class="dc-location-item-label">Teléfono</div>
+        <div class="dc-location-item-value"><a href="tel:+5493417760680">+54 341 776-0680</a></div>
+      </div>
+      <div class="dc-location-item">
+        <div class="dc-location-item-label">Horario</div>
+        <div class="dc-location-item-value">Lun a Vie 8 — 12:15 / 14 — 18:30<br>Sáb 8 — 12:30</div>
+      </div>
     </div>
   </div>
+
+  <iframe class="dc-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3349.5!2d-60.6857!3d-32.9621!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDU3JzQzLjYiUyA2MMKwNDEnMDguNSJX!5e0!3m2!1ses!2sar!4v1700000000000!5m2!1ses!2sar&q=San+Nicolas+2949+Rosario" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </section>
 
 <footer class="dc-footer">
-  <div class="dc-footer-logo">DINCOLOR</div>
-  <div class="dc-footer-line">Pinturerías Dincolor · San Nicolás 2949, Rosario</div>
-  <div class="dc-copy">© 2026 DINCOLOR · TODOS LOS DERECHOS RESERVADOS</div>
+  <div class="dc-footer-logo"><strong>DIN</strong>COLOR</div>
+  <div class="dc-footer-divider"></div>
+  <div class="dc-copy">© 2026 · Pinturerías Dincolor · Rosario</div>
 </footer>
 
 <a href="https://wa.me/5493413113046" class="dc-wa" aria-label="WhatsApp">
@@ -306,7 +347,7 @@ window.addEventListener('scroll', () => {
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
 }, { threshold: 0.15 });
-document.querySelectorAll('.fade-in, .dc-stat, .dc-vcat-hero, .dc-vcat-small, .dc-flip').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-in, .dc-stat, .dc-vcat-hero, .dc-vcat-small, .dc-editorial-block').forEach(el => observer.observe(el));
 
 const counterObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -335,4 +376,5 @@ if (statsSection) counterObserver.observe(statsSection);
 
 </body>
 </html>
+
 
