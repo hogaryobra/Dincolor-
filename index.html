@@ -8,7 +8,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1A1A1A; line-height: 1.6; background: #fff; overflow-x: hidden; }
 
-/* ANIMACIONES */
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
@@ -18,287 +17,82 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   100% { opacity: 0; transform: translateY(10px); }
 }
 
-/* HEADER MINIMALISTA */
 .dc-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 24px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: transparent;
-  transition: background 0.4s ease, padding 0.4s ease;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 24px 40px; display: flex; justify-content: space-between; align-items: center;
+  background: transparent; transition: background 0.4s ease, padding 0.4s ease;
 }
 .dc-header.scrolled {
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 16px 40px;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  padding: 16px 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);
 }
-.dc-header-logo {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.4s ease;
-}
+.dc-header-logo { font-size: 22px; font-weight: 800; letter-spacing: 3px; color: #fff; text-decoration: none; transition: color 0.4s ease; }
 .dc-header.scrolled .dc-header-logo { color: #1A1A1A; }
 .dc-header-wa {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: 1.5px solid #fff;
-  border-radius: 50px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
+  display: flex; align-items: center; gap: 8px; padding: 10px 20px;
+  border: 1.5px solid #fff; border-radius: 50px; color: #fff; text-decoration: none;
+  font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;
 }
-.dc-header.scrolled .dc-header-wa {
-  border-color: #25D366;
-  color: #25D366;
-}
-.dc-header-wa:hover {
-  background: #25D366;
-  border-color: #25D366;
-  color: #fff;
-}
+.dc-header.scrolled .dc-header-wa { border-color: #25D366; color: #25D366; }
+.dc-header-wa:hover { background: #25D366; border-color: #25D366; color: #fff; }
 .dc-header-wa svg { width: 16px; height: 16px; fill: currentColor; }
 
-/* HERO ESTILO VUITTON */
 .dc-hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-  color: #fff;
+  position: relative; width: 100%; height: 100vh; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+  padding: 0; color: #fff;
 }
 .dc-hero-bg {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=2000&q=85');
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-  animation: fadeIn 1.5s ease;
+  background-size: cover; background-position: center; z-index: -1; animation: fadeIn 1.5s ease;
 }
-.dc-hero-top {
-  width: 100%;
-  text-align: center;
-  padding-top: 130px;
-  opacity: 0;
-  animation: fadeInUp 1.2s ease 0.5s forwards;
-}
-.dc-hero-brand {
-  font-size: 56px;
-  font-weight: 300;
-  letter-spacing: 12px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-}
+.dc-hero-top { width: 100%; text-align: center; padding-top: 130px; opacity: 0; animation: fadeInUp 1.2s ease 0.5s forwards; }
+.dc-hero-brand { font-size: 56px; font-weight: 300; letter-spacing: 12px; text-transform: uppercase; margin-bottom: 8px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
 .dc-hero-brand strong { font-weight: 800; }
-.dc-hero-sub {
-  font-size: 11px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.8);
-}
-.dc-hero-bottom {
-  width: 100%;
-  text-align: center;
-  padding-bottom: 80px;
-  opacity: 0;
-  animation: fadeInUp 1.2s ease 1s forwards;
-}
-.dc-hero-tag {
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: 18px;
-}
-.dc-hero-title {
-  font-size: 32px;
-  font-weight: 300;
-  letter-spacing: 1px;
-  margin-bottom: 30px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
-  font-family: Georgia, serif;
-  font-style: italic;
-}
-.dc-hero-link {
-  display: inline-block;
-  color: #fff;
-  text-decoration: none;
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #fff;
-  transition: all 0.3s ease;
-}
-.dc-hero-link:hover {
-  letter-spacing: 4px;
-  border-bottom-color: #B89DD0;
-  color: #B89DD0;
-}
-.dc-scroll-hint {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 50px;
-  background: rgba(255,255,255,0.5);
-  overflow: hidden;
-}
-.dc-scroll-hint::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background: #fff;
-  animation: scrollIndicator 2s ease-in-out infinite;
-}
+.dc-hero-sub { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: rgba(255,255,255,0.8); }
+.dc-hero-bottom { width: 100%; text-align: center; padding-bottom: 80px; opacity: 0; animation: fadeInUp 1.2s ease 1s forwards; }
+.dc-hero-tag { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px; }
+.dc-hero-title { font-size: 32px; font-weight: 300; letter-spacing: 1px; margin-bottom: 30px; text-shadow: 0 2px 20px rgba(0,0,0,0.4); font-family: Georgia, serif; font-style: italic; }
+.dc-hero-link { display: inline-block; color: #fff; text-decoration: none; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; padding-bottom: 6px; border-bottom: 1px solid #fff; transition: all 0.3s ease; }
+.dc-hero-link:hover { letter-spacing: 4px; border-bottom-color: #B89DD0; color: #B89DD0; }
+.dc-scroll-hint { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); width: 1px; height: 50px; background: rgba(255,255,255,0.5); overflow: hidden; }
+.dc-scroll-hint::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: #fff; animation: scrollIndicator 2s ease-in-out infinite; }
 
-/* CONTADORES */
 .dc-stats { background: #1A1A1A; color: #fff; padding: 80px 24px; position: relative; overflow: hidden; }
 .dc-stats::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #4A2D5C, transparent); }
-.dc-stats-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+.dc-stats-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
 .dc-stat { padding: 20px; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .dc-stat.visible { opacity: 1; transform: translateY(0); }
 .dc-stat-number { font-size: 56px; font-weight: 300; color: #fff; letter-spacing: -1px; line-height: 1; margin-bottom: 12px; display: block; }
 .dc-stat-plus { color: #B89DD0; font-weight: 400; }
 .dc-stat-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 3px; }
-.dc-stat-stars { color: #FFD700; font-size: 16px; margin-top: 6px; letter-spacing: 2px; }
 
-/* CATEGORÍAS - LAYOUT MIXTO */
 .dc-vcat-section { padding: 90px 24px; max-width: 1300px; margin: 0 auto; }
 .dc-vcat-intro { text-align: center; margin-bottom: 50px; }
 .dc-vcat-intro-tag { font-size: 11px; letter-spacing: 5px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 14px; }
 .dc-vcat-intro h2 { font-size: 38px; font-weight: 300; letter-spacing: -0.5px; color: #1A1A1A; }
 .dc-vcat-intro h2 em { font-style: italic; color: #4A2D5C; font-family: Georgia, serif; }
 
-.dc-vcat-hero {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  height: 420px;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 20px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  cursor: pointer;
-}
+.dc-vcat-hero { position: relative; border-radius: 4px; overflow: hidden; height: 420px; text-decoration: none; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
 .dc-vcat-hero.visible { opacity: 1; transform: translateY(0); }
 
-.dc-vcat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-.dc-vcat-small {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  height: 260px;
-  text-decoration: none;
-  display: block;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  cursor: pointer;
-}
+.dc-vcat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.dc-vcat-small { position: relative; border-radius: 4px; overflow: hidden; height: 260px; text-decoration: none; display: block; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
 .dc-vcat-small.visible { opacity: 1; transform: translateY(0); }
 
-.dc-vcat-img {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-.dc-vcat-hero:hover .dc-vcat-img,
-.dc-vcat-small:hover .dc-vcat-img { transform: scale(1.08); }
+.dc-vcat-img { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1); }
+.dc-vcat-hero:hover .dc-vcat-img, .dc-vcat-small:hover .dc-vcat-img { transform: scale(1.08); }
 
-.dc-vcat-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.7) 100%);
-  transition: background 0.6s ease;
-}
+.dc-vcat-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.7) 100%); transition: background 0.6s ease; }
 
-.dc-vcat-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 35px 40px;
-  color: #fff;
-  z-index: 2;
-}
-.dc-vcat-tag {
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: 8px;
-  display: block;
-}
-.dc-vcat-hero .dc-vcat-content h3 {
-  font-size: 42px;
-  font-weight: 300;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin: 0;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-}
-.dc-vcat-small .dc-vcat-content h3 {
-  font-size: 26px;
-  font-weight: 300;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin: 0;
-  text-shadow: 0 2px 15px rgba(0,0,0,0.3);
-}
-.dc-vcat-link {
-  display: inline-block;
-  margin-top: 12px;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #fff;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255,255,255,0);
-  transition: all 0.4s ease;
-}
-.dc-vcat-hero:hover .dc-vcat-link,
-.dc-vcat-small:hover .dc-vcat-link {
-  border-bottom-color: #fff;
-  letter-spacing: 4px;
-}
+.dc-vcat-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 35px 40px; color: #fff; z-index: 2; }
+.dc-vcat-tag { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 8px; display: block; }
+.dc-vcat-hero .dc-vcat-content h3 { font-size: 42px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+.dc-vcat-small .dc-vcat-content h3 { font-size: 26px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.3); }
+.dc-vcat-link { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fff; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0); transition: all 0.4s ease; }
+.dc-vcat-hero:hover .dc-vcat-link, .dc-vcat-small:hover .dc-vcat-link { border-bottom-color: #fff; letter-spacing: 4px; }
 
-/* POR QUÉ DINCOLOR - FLIP CARDS */
 .dc-why { background: #fafafa; padding: 90px 24px; position: relative; }
 .dc-why-inner { max-width: 1200px; margin: 0 auto; }
 .dc-section-title { text-align: center; margin-bottom: 8px; font-size: 38px; font-weight: 300; letter-spacing: -0.5px; }
@@ -319,34 +113,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 .dc-flip-back h4 { font-size: 16px; font-weight: 600; margin-bottom: 12px; letter-spacing: 1px; }
 .dc-flip-back p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
 
-/* CTA */
 .dc-cta-section { background: #1A1A1A; color: #fff; padding: 90px 24px; text-align: center; position: relative; overflow: hidden; }
 .dc-cta-section h2 { font-size: 36px; font-weight: 300; margin-bottom: 14px; letter-spacing: -0.5px; }
 .dc-cta-section h2 em { font-style: italic; color: #B89DD0; font-family: Georgia, serif; }
 .dc-cta-section p { color: #aaa; font-size: 14px; max-width: 500px; margin: 0 auto 32px; letter-spacing: 1px; }
-.dc-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 36px;
-  border: 1px solid #fff;
-  border-radius: 50px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  transition: all 0.4s ease;
-}
-.dc-cta-btn:hover {
-  background: #25D366;
-  border-color: #25D366;
-  letter-spacing: 5px;
-}
+.dc-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; border: 1px solid #fff; border-radius: 50px; color: #fff; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; transition: all 0.4s ease; }
+.dc-cta-btn:hover { background: #25D366; border-color: #25D366; letter-spacing: 5px; }
 .dc-cta-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-/* UBICACIÓN */
 .dc-location { padding: 90px 24px; max-width: 1200px; margin: 0 auto; text-align: center; }
 .dc-location-card { background: #fff; border: 1px solid #eee; border-radius: 4px; padding: 50px 32px; max-width: 500px; margin: 30px auto 0; transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .dc-location-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(74,45,92,0.1); }
@@ -355,22 +129,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 .dc-location-row svg { width: 18px; height: 18px; stroke: #4A2D5C; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 .dc-location-row a { color: #4A2D5C; text-decoration: none; font-weight: 600; }
 
-/* FADE IN */
 .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-/* FOOTER */
 .dc-footer { background: #0F0F0F; color: #888; padding: 60px 24px 30px; text-align: center; font-size: 12px; }
 .dc-footer-logo { color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 10px; letter-spacing: 4px; }
 .dc-footer-line { color: #ccc; margin-bottom: 20px; letter-spacing: 1px; font-size: 13px; }
 .dc-copy { margin-top: 20px; color: #555; font-size: 11px; letter-spacing: 2px; }
 
-/* WHATSAPP FLOTANTE */
 .dc-wa { position: fixed; bottom: 24px; right: 24px; background: #25D366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(37,211,102,0.5); z-index: 999; transition: all 0.3s ease; animation: pulse 2s ease-in-out infinite; }
 .dc-wa:hover { transform: scale(1.1) rotate(8deg); animation: none; }
 .dc-wa svg { width: 32px; height: 32px; fill: #fff; }
 
-/* MOBILE */
 @media (max-width: 700px) {
   .dc-header { padding: 16px 20px; }
   .dc-header.scrolled { padding: 12px 20px; }
@@ -402,7 +172,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="dc-header" id="header">
   <a href="#" class="dc-header-logo">DINCOLOR</a>
   <a href="https://wa.me/5493413113046" class="dc-header-wa">
@@ -411,25 +180,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   </a>
 </header>
 
-<!-- HERO -->
 <section class="dc-hero">
   <div class="dc-hero-bg"></div>
-
   <div class="dc-hero-top">
     <div class="dc-hero-brand"><strong>DIN</strong>COLOR</div>
     <div class="dc-hero-sub">Pinturerías</div>
   </div>
-
   <div class="dc-hero-bottom">
     <div class="dc-hero-tag">Rosario · desde 1977</div>
     <div class="dc-hero-title">Calidad premium al precio que merecés</div>
     <a href="#categorias" class="dc-hero-link">Descubrí nuestros productos</a>
   </div>
-
   <div class="dc-scroll-hint"></div>
 </section>
 
-<!-- CONTADORES -->
 <section class="dc-stats">
   <div class="dc-stats-grid">
     <div class="dc-stat">
@@ -441,20 +205,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
       <div class="dc-stat-label">Marcas disponibles</div>
     </div>
     <div class="dc-stat">
-      <span class="dc-stat-number"><span class="dc-stat-plus">+</span><span data-count="721">0</span></span>
-      <div class="dc-stat-label">Reseñas en Google</div>
-      <div class="dc-stat-stars">★★★★★ 4.6</div>
-    </div>
-    <div class="dc-stat">
       <span class="dc-stat-number"><span data-count="100" data-suffix="%">0</span></span>
       <div class="dc-stat-label">Clientes satisfechos</div>
     </div>
   </div>
 </section>
 
-<!-- CATEGORÍAS -->
 <section class="dc-vcat-section" id="categorias">
-
   <div class="dc-vcat-intro">
     <div class="dc-vcat-intro-tag">Catálogo</div>
     <h2>Nuestras <em>categorías</em></h2>
@@ -471,114 +228,54 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   </a>
 
   <div class="dc-vcat-grid">
-
     <a href="maderas.html" class="dc-vcat-small">
       <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0237.webp');"></div>
       <div class="dc-vcat-overlay"></div>
-      <div class="dc-vcat-content">
-        <h3>Maderas</h3>
-        <span class="dc-vcat-link">Ver línea</span>
-      </div>
+      <div class="dc-vcat-content"><h3>Maderas</h3><span class="dc-vcat-link">Ver línea</span></div>
     </a>
-
     <a href="nautica.html" class="dc-vcat-small">
       <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0238.jpeg');"></div>
       <div class="dc-vcat-overlay"></div>
-      <div class="dc-vcat-content">
-        <h3>Náutica</h3>
-        <span class="dc-vcat-link">Ver línea</span>
-      </div>
+      <div class="dc-vcat-content"><h3>Náutica</h3><span class="dc-vcat-link">Ver línea</span></div>
     </a>
-
     <a href="industria.html" class="dc-vcat-small">
       <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0242.jpeg');"></div>
       <div class="dc-vcat-overlay"></div>
-      <div class="dc-vcat-content">
-        <h3>Industria</h3>
-        <span class="dc-vcat-link">Ver línea</span>
-      </div>
+      <div class="dc-vcat-content"><h3>Industria</h3><span class="dc-vcat-link">Ver línea</span></div>
     </a>
-
     <a href="automotor.html" class="dc-vcat-small">
       <div class="dc-vcat-img" style="background-image: url('https://dincolorart.wordpress.com/wp-content/uploads/2026/04/img_0243.jpeg');"></div>
       <div class="dc-vcat-overlay"></div>
-      <div class="dc-vcat-content">
-        <h3>Automotor</h3>
-        <span class="dc-vcat-link">Ver línea</span>
-      </div>
+      <div class="dc-vcat-content"><h3>Automotor</h3><span class="dc-vcat-link">Ver línea</span></div>
     </a>
-
   </div>
 </section>
 
-<!-- POR QUÉ DINCOLOR -->
 <section class="dc-why">
   <div class="dc-why-inner">
     <h2 class="dc-section-title fade-in">¿Por qué <em>Dincolor</em>?</h2>
     <p class="dc-section-subtitle fade-in">Lo que nos diferencia</p>
     <div class="dc-why-grid">
-
-      <div class="dc-flip">
-        <div class="dc-flip-inner">
-          <div class="dc-flip-front">
-            <div class="dc-flip-icon">🧪</div>
-            <h3>Formulación propia</h3>
-            <p>Trabajamos pintura para auto con básicos.</p>
-          </div>
-          <div class="dc-flip-back">
-            <h4>Calidad controlada</h4>
-            <p>Nosotros mismos formulamos. Sabemos qué hay en cada balde porque lo hicimos nosotros.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dc-flip">
-        <div class="dc-flip-inner">
-          <div class="dc-flip-front">
-            <div class="dc-flip-icon">🎯</div>
-            <h3>Asesoramiento real</h3>
-            <p>Atención de gente que sabe.</p>
-          </div>
-          <div class="dc-flip-back">
-            <h4>Expertos del rubro</h4>
-            <p>No vendedores improvisados. Te decimos exactamente qué necesitás para tu obra.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dc-flip">
-        <div class="dc-flip-inner">
-          <div class="dc-flip-front">
-            <div class="dc-flip-icon">💰</div>
-            <h3>Mejor precio</h3>
-            <p>Hasta 20% más barato.</p>
-          </div>
-          <div class="dc-flip-back">
-            <h4>Sin resignar calidad</h4>
-            <p>Trabajamos directo con fábrica. Te pasamos el ahorro a vos, no al intermediario.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="dc-flip">
-        <div class="dc-flip-inner">
-          <div class="dc-flip-front">
-            <div class="dc-flip-icon">📦</div>
-            <h3>Producto fresco</h3>
-            <p>Stock que rota constantemente.</p>
-          </div>
-          <div class="dc-flip-back">
-            <h4>Nada parado</h4>
-            <p>No vendemos pintura vieja. Renovamos stock todas las semanas.</p>
-          </div>
-        </div>
-      </div>
-
+      <div class="dc-flip"><div class="dc-flip-inner">
+        <div class="dc-flip-front"><div class="dc-flip-icon">🧪</div><h3>Formulación propia</h3><p>Trabajamos pintura para auto con básicos.</p></div>
+        <div class="dc-flip-back"><h4>Calidad controlada</h4><p>Nosotros mismos formulamos. Sabemos qué hay en cada balde porque lo hicimos nosotros.</p></div>
+      </div></div>
+      <div class="dc-flip"><div class="dc-flip-inner">
+        <div class="dc-flip-front"><div class="dc-flip-icon">🎯</div><h3>Asesoramiento real</h3><p>Atención de gente que sabe.</p></div>
+        <div class="dc-flip-back"><h4>Expertos del rubro</h4><p>No vendedores improvisados. Te decimos exactamente qué necesitás para tu obra.</p></div>
+      </div></div>
+      <div class="dc-flip"><div class="dc-flip-inner">
+        <div class="dc-flip-front"><div class="dc-flip-icon">💰</div><h3>Mejor precio</h3><p>Hasta 20% más barato.</p></div>
+        <div class="dc-flip-back"><h4>Sin resignar calidad</h4><p>Trabajamos directo con fábrica. Te pasamos el ahorro a vos, no al intermediario.</p></div>
+      </div></div>
+      <div class="dc-flip"><div class="dc-flip-inner">
+        <div class="dc-flip-front"><div class="dc-flip-icon">📦</div><h3>Producto fresco</h3><p>Stock que rota constantemente.</p></div>
+        <div class="dc-flip-back"><h4>Nada parado</h4><p>No vendemos pintura vieja. Renovamos stock todas las semanas.</p></div>
+      </div></div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section class="dc-cta-section">
   <h2 class="fade-in">¿Necesitás <em>asesoramiento</em>?</h2>
   <p class="fade-in">Escribinos por WhatsApp y te ayudamos a elegir el producto justo para tu obra</p>
@@ -588,7 +285,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   </a>
 </section>
 
-<!-- UBICACIÓN -->
 <section class="dc-location">
   <h2 class="dc-section-title fade-in">Dónde <em>encontrarnos</em></h2>
   <p class="dc-section-subtitle fade-in">Te esperamos en el local</p>
@@ -609,36 +305,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="dc-footer">
   <div class="dc-footer-logo">DINCOLOR</div>
   <div class="dc-footer-line">Pinturerías Dincolor · San Nicolás 2949, Rosario</div>
   <div class="dc-copy">© 2026 DINCOLOR · TODOS LOS DERECHOS RESERVADOS</div>
 </footer>
 
-<!-- WHATSAPP FLOTANTE -->
 <a href="https://wa.me/5493413113046" class="dc-wa" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
 </a>
 
 <script>
-// Header transparente -> blanco al scrollear
 const header = document.getElementById('header');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 80) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
 });
 
-// Fade in al scroll
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
 }, { threshold: 0.15 });
-
 document.querySelectorAll('.fade-in, .dc-stat, .dc-vcat-hero, .dc-vcat-small, .dc-flip').forEach(el => observer.observe(el));
 
-// Contadores
 const counterObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -660,7 +348,6 @@ const counterObserver = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.3 });
-
 const statsSection = document.querySelector('.dc-stats');
 if (statsSection) counterObserver.observe(statsSection);
 </script>
