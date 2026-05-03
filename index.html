@@ -7,6 +7,7 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1A1A1A; line-height: 1.6; background: #fff; overflow-x: hidden; }
+body.menu-open { overflow: hidden; }
 
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -16,15 +17,57 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   50% { opacity: 1; }
   100% { opacity: 0; transform: translateY(10px); }
 }
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
 
 .dc-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; background: transparent; transition: background 0.4s ease, padding 0.4s ease; }
 .dc-header.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 16px 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
-.dc-header-logo { font-size: 22px; font-weight: 800; letter-spacing: 3px; color: #fff; text-decoration: none; transition: color 0.4s ease; }
+
+.dc-burger { background: none; border: none; cursor: pointer; padding: 10px; display: flex; flex-direction: column; gap: 5px; transition: opacity 0.3s ease; }
+.dc-burger span { width: 26px; height: 2px; background: #fff; transition: background 0.4s ease; }
+.dc-header.scrolled .dc-burger span { background: #1A1A1A; }
+
+.dc-header-logo { font-size: 22px; font-weight: 800; letter-spacing: 3px; color: #fff; text-decoration: none; transition: color 0.4s ease; position: absolute; left: 50%; transform: translateX(-50%); }
 .dc-header.scrolled .dc-header-logo { color: #1A1A1A; }
 .dc-header-wa { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border: 1.5px solid #fff; border-radius: 50px; color: #fff; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; }
 .dc-header.scrolled .dc-header-wa { border-color: #25D366; color: #25D366; }
 .dc-header-wa:hover { background: #25D366; border-color: #25D366; color: #fff; }
 .dc-header-wa svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* SIDEBAR */
+.dc-sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; z-index: 200; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.dc-sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+.dc-sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 360px; max-width: 85vw; background: #fff; z-index: 201; transform: translateX(-100%); transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: 4px 0 30px rgba(0,0,0,0.15); }
+.dc-sidebar.active { transform: translateX(0); }
+
+.dc-sidebar-header { padding: 28px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+.dc-sidebar-logo { font-size: 18px; font-weight: 800; letter-spacing: 3px; color: #1A1A1A; }
+.dc-sidebar-close { background: none; border: none; cursor: pointer; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.3s ease; }
+.dc-sidebar-close:hover { background: #f5f5f5; }
+.dc-sidebar-close svg { width: 18px; height: 18px; }
+
+.dc-sidebar-nav { flex: 1; overflow-y: auto; padding: 24px 0; }
+.dc-sidebar-section { padding: 0 32px; margin-bottom: 32px; }
+.dc-sidebar-section-title { font-size: 10px; letter-spacing: 4px; color: #999; text-transform: uppercase; margin-bottom: 14px; }
+
+.dc-sidebar-link { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; color: #1A1A1A; text-decoration: none; font-size: 16px; font-weight: 400; border-bottom: 1px solid #f5f5f5; transition: padding-left 0.3s ease, color 0.3s ease; }
+.dc-sidebar-link:hover { padding-left: 8px; color: #4A2D5C; }
+.dc-sidebar-link svg { width: 14px; height: 14px; opacity: 0.4; transition: opacity 0.3s ease, transform 0.3s ease; }
+.dc-sidebar-link:hover svg { opacity: 1; transform: translateX(4px); }
+
+.dc-sidebar-link.dc-ofertas { background: linear-gradient(90deg, #4A2D5C, #7B4B9C, #4A2D5C); background-size: 200% auto; color: #fff; padding: 16px 20px; border-radius: 6px; border: none; margin-bottom: 4px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; font-size: 13px; animation: shimmer 4s linear infinite; }
+.dc-sidebar-link.dc-ofertas:hover { padding-left: 28px; color: #fff; }
+.dc-sidebar-link.dc-ofertas svg { opacity: 1; }
+
+.dc-sidebar-footer { padding: 24px 32px; border-top: 1px solid #f0f0f0; }
+.dc-sidebar-wa { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; background: #25D366; color: #fff; text-decoration: none; border-radius: 50px; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; transition: background 0.3s ease; }
+.dc-sidebar-wa:hover { background: #1eb858; }
+.dc-sidebar-wa svg { width: 18px; height: 18px; fill: #fff; }
+.dc-sidebar-contact { text-align: center; margin-top: 18px; font-size: 12px; color: #777; line-height: 1.7; }
+.dc-sidebar-contact a { color: #4A2D5C; text-decoration: none; }
 
 .dc-hero { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 0; color: #fff; }
 .dc-hero-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=2880&q=90&auto=format&fm=webp'); background-size: cover; background-position: center; z-index: -1; animation: fadeIn 1.5s ease; }
@@ -48,8 +91,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 
 .dc-vcat-hero { position: relative; border-radius: 4px; overflow: hidden; height: 420px; text-decoration: none; display: block; margin-bottom: 20px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
 .dc-vcat-hero.visible { opacity: 1; transform: translateY(0); }
-.dc-vcat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.dc-vcat-small { position: relative; border-radius: 4px; overflow: hidden; height: 260px; text-decoration: none; display: block; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
+.dc-vcat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.dc-vcat-small { position: relative; border-radius: 4px; overflow: hidden; height: 240px; text-decoration: none; display: block; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; cursor: pointer; }
 .dc-vcat-small.visible { opacity: 1; transform: translateY(0); }
 .dc-vcat-img { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1); }
 .dc-vcat-hero:hover .dc-vcat-img, .dc-vcat-small:hover .dc-vcat-img { transform: scale(1.08); }
@@ -57,8 +100,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 .dc-vcat-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 35px 40px; color: #fff; z-index: 2; }
 .dc-vcat-tag { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 8px; display: block; }
 .dc-vcat-hero .dc-vcat-content h3 { font-size: 42px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
-.dc-vcat-small .dc-vcat-content h3 { font-size: 26px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.3); }
-.dc-vcat-link { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fff; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0); transition: all 0.4s ease; }
+.dc-vcat-small .dc-vcat-content { padding: 24px 28px; }
+.dc-vcat-small .dc-vcat-content h3 { font-size: 22px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: 0 2px 15px rgba(0,0,0,0.3); }
+.dc-vcat-link { display: inline-block; margin-top: 10px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fff; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0); transition: all 0.4s ease; }
 .dc-vcat-hero:hover .dc-vcat-link, .dc-vcat-small:hover .dc-vcat-link { border-bottom-color: #fff; letter-spacing: 4px; }
 
 .dc-stats { background: #1A1A1A; color: #fff; padding: 80px 24px; position: relative; overflow: hidden; }
@@ -111,15 +155,41 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-.dc-footer { background: #0a0a0a; color: #888; padding: 100px 24px 50px; text-align: center; }
-.dc-footer-logo { color: #fff; font-size: 56px; font-weight: 300; letter-spacing: 12px; margin-bottom: 30px; }
-.dc-footer-logo strong { font-weight: 800; }
-.dc-footer-divider { width: 60px; height: 1px; background: #444; margin: 30px auto; }
-.dc-copy { color: #666; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
+/* FOOTER MEJORADO */
+.dc-footer { background: #0a0a0a; color: #888; padding: 80px 24px 0; }
+.dc-footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px; padding-bottom: 60px; }
+.dc-footer-col h4 { color: #fff; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 24px; font-weight: 600; }
+.dc-footer-brand { color: #fff; font-size: 32px; font-weight: 300; letter-spacing: 8px; margin-bottom: 18px; }
+.dc-footer-brand strong { font-weight: 800; }
+.dc-footer-desc { color: #888; font-size: 13px; line-height: 1.8; margin-bottom: 24px; max-width: 320px; }
+.dc-footer-social { display: flex; gap: 12px; }
+.dc-footer-social a { width: 38px; height: 38px; border-radius: 50%; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #888; text-decoration: none; transition: all 0.3s ease; }
+.dc-footer-social a:hover { background: #4A2D5C; color: #fff; transform: translateY(-2px); }
+.dc-footer-social svg { width: 16px; height: 16px; fill: currentColor; }
+
+.dc-footer-col ul { list-style: none; }
+.dc-footer-col li { margin-bottom: 12px; }
+.dc-footer-col a { color: #888; text-decoration: none; font-size: 13px; transition: color 0.3s ease; }
+.dc-footer-col a:hover { color: #fff; }
+
+.dc-footer-contact-item { font-size: 13px; color: #888; line-height: 1.7; margin-bottom: 16px; }
+.dc-footer-contact-item strong { display: block; color: #fff; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+.dc-footer-contact-item a { color: #888; text-decoration: none; transition: color 0.3s ease; }
+.dc-footer-contact-item a:hover { color: #fff; }
+
+.dc-footer-bottom { max-width: 1200px; margin: 0 auto; padding: 30px 0; border-top: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.dc-copy { color: #555; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+.dc-footer-legal { display: flex; gap: 24px; }
+.dc-footer-legal a { color: #555; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: color 0.3s ease; }
+.dc-footer-legal a:hover { color: #fff; }
 
 .dc-wa { position: fixed; bottom: 24px; right: 24px; background: #25D366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(37,211,102,0.5); z-index: 999; transition: all 0.3s ease; animation: pulse 2s ease-in-out infinite; }
 .dc-wa:hover { transform: scale(1.1) rotate(8deg); animation: none; }
 .dc-wa svg { width: 32px; height: 32px; fill: #fff; }
+
+@media (max-width: 1100px) {
+  .dc-vcat-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
 @media (max-width: 900px) {
   .dc-editorial-block { grid-template-columns: 1fr; }
@@ -127,6 +197,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   .dc-editorial-img { min-height: 350px; order: -1; }
   .dc-editorial-text { padding: 60px 30px; }
   .dc-editorial-title { font-size: 32px; }
+  .dc-footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .dc-footer-col:first-child { grid-column: 1 / -1; }
 }
 
 @media (max-width: 700px) {
@@ -144,10 +216,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   .dc-vcat-intro h2 { font-size: 28px; }
   .dc-vcat-grid { grid-template-columns: 1fr; gap: 16px; }
   .dc-vcat-hero { height: 280px; margin-bottom: 16px; }
-  .dc-vcat-small { height: 220px; }
+  .dc-vcat-small { height: 200px; }
   .dc-vcat-content { padding: 26px 28px; }
   .dc-vcat-hero .dc-vcat-content h3 { font-size: 30px; }
-  .dc-vcat-small .dc-vcat-content h3 { font-size: 22px; }
+  .dc-vcat-small .dc-vcat-content h3 { font-size: 20px; }
   .dc-stats { padding: 60px 20px; }
   .dc-stat-number { font-size: 44px; }
   .dc-editorial-text { padding: 50px 24px; }
@@ -159,20 +231,77 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   .dc-location-info { padding: 40px 20px; }
   .dc-location-info-grid { gap: 30px; }
   .dc-map { height: 350px; }
-  .dc-footer { padding: 60px 20px 40px; }
-  .dc-footer-logo { font-size: 32px; letter-spacing: 6px; }
+  .dc-footer { padding: 60px 20px 0; }
+  .dc-footer-grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 40px; }
+  .dc-footer-brand { font-size: 26px; letter-spacing: 5px; }
+  .dc-footer-bottom { flex-direction: column; text-align: center; padding: 24px 0; }
 }
 </style>
 </head>
 <body>
 
 <header class="dc-header" id="header">
+  <button class="dc-burger" id="burger" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
   <a href="#" class="dc-header-logo">DINCOLOR</a>
   <a href="https://wa.me/5493413113046" class="dc-header-wa">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
     <span>WhatsApp</span>
   </a>
 </header>
+
+<!-- SIDEBAR -->
+<div class="dc-sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="dc-sidebar" id="sidebar">
+  <div class="dc-sidebar-header">
+    <div class="dc-sidebar-logo">DINCOLOR</div>
+    <button class="dc-sidebar-close" id="sidebarClose" aria-label="Cerrar menú">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <nav class="dc-sidebar-nav">
+    <div class="dc-sidebar-section">
+      <a href="ofertas.html" class="dc-sidebar-link dc-ofertas">
+        Ver ofertas del mes
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+    <div class="dc-sidebar-section">
+      <div class="dc-sidebar-section-title">Navegación</div>
+      <a href="#" class="dc-sidebar-link">Inicio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="#categorias" class="dc-sidebar-link">Categorías <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="#nosotros" class="dc-sidebar-link">Nosotros <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="#ubicacion" class="dc-sidebar-link">Ubicación <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
+
+    <div class="dc-sidebar-section">
+      <div class="dc-sidebar-section-title">Productos</div>
+      <a href="hogar.html" class="dc-sidebar-link">Hogar y Obra <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="maderas.html" class="dc-sidebar-link">Maderas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="nautica.html" class="dc-sidebar-link">Náutica <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="industria.html" class="dc-sidebar-link">Industria <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="automotor.html" class="dc-sidebar-link">Automotor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="herramientas.html" class="dc-sidebar-link">Herramientas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+      <a href="accesorios.html" class="dc-sidebar-link">Accesorios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
+  </nav>
+
+  <div class="dc-sidebar-footer">
+    <a href="https://wa.me/5493413113046" class="dc-sidebar-wa">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+      Hablanos
+    </a>
+    <div class="dc-sidebar-contact">
+      San Nicolás 2949, Rosario<br>
+      <a href="tel:+5493417760680">+54 341 776-0680</a>
+    </div>
+  </div>
+</aside>
 
 <section class="dc-hero">
   <div class="dc-hero-bg"></div>
@@ -225,6 +354,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
       <div class="dc-vcat-overlay"></div>
       <div class="dc-vcat-content"><h3>Automotor</h3><span class="dc-vcat-link">Ver línea</span></div>
     </a>
+    <a href="herramientas.html" class="dc-vcat-small">
+      <div class="dc-vcat-img" style="background-image: url('https://images.unsplash.com/photo-1581147036324-c1c89c2c8b5c?w=1600&q=90&auto=format&fm=webp');"></div>
+      <div class="dc-vcat-overlay"></div>
+      <div class="dc-vcat-content"><h3>Herramientas</h3><span class="dc-vcat-link">Ver línea</span></div>
+    </a>
+    <a href="accesorios.html" class="dc-vcat-small">
+      <div class="dc-vcat-img" style="background-image: url('https://images.unsplash.com/photo-1572297794911-6753b439e4f4?w=1600&q=90&auto=format&fm=webp');"></div>
+      <div class="dc-vcat-overlay"></div>
+      <div class="dc-vcat-content"><h3>Accesorios</h3><span class="dc-vcat-link">Ver línea</span></div>
+    </a>
   </div>
 </section>
 
@@ -245,41 +384,41 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
   </div>
 </section>
 
-<section class="dc-editorial">
+<section class="dc-editorial" id="nosotros">
 
   <div class="dc-editorial-block">
-    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1607400201515-c2c41c07d307?w=1800&q=90&auto=format&fm=webp');"></div>
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=1800&q=90&auto=format&fm=webp');"></div>
     <div class="dc-editorial-text">
       <div class="dc-editorial-tag">Capítulo 01</div>
       <h2 class="dc-editorial-title">Formulación <em>propia</em></h2>
-      <p>Trabajamos pintura para auto con básicos. Nosotros mismos formulamos cada producto, controlando la calidad desde el origen. Sabemos exactamente qué hay en cada balde porque lo hicimos nosotros, en nuestro propio laboratorio.</p>
+      <p>Desarrollamos cada producto en nuestro propio laboratorio, con estricto control de calidad desde la materia prima hasta el envasado final. Esta integración vertical nos permite garantizar consistencia, rendimiento y trazabilidad en cada lote que ofrecemos.</p>
     </div>
   </div>
 
   <div class="dc-editorial-block reverse">
-    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1800&q=90&auto=format&fm=webp');"></div>
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1800&q=90&auto=format&fm=webp');"></div>
     <div class="dc-editorial-text">
       <div class="dc-editorial-tag">Capítulo 02</div>
-      <h2 class="dc-editorial-title">Asesoramiento <em>real</em></h2>
-      <p>No vendedores improvisados. Atención personalizada de gente que sabe del oficio. Te decimos exactamente qué necesitás para tu obra, sin vueltas, sin promesas vacías. Más de 48 años de experiencia detrás de cada recomendación.</p>
+      <h2 class="dc-editorial-title">Asesoramiento <em>técnico</em></h2>
+      <p>Contamos con un equipo de especialistas formados en el rubro, capaces de orientarte sobre el producto adecuado para cada superficie y aplicación. Casi cinco décadas de trayectoria respaldan cada recomendación que recibís en nuestro local.</p>
     </div>
   </div>
 
   <div class="dc-editorial-block">
-    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1800&q=90&auto=format&fm=webp');"></div>
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1800&q=90&auto=format&fm=webp');"></div>
     <div class="dc-editorial-text">
       <div class="dc-editorial-tag">Capítulo 03</div>
-      <h2 class="dc-editorial-title">Mejor <em>precio</em> del mercado</h2>
-      <p>Hasta 20% más barato que la competencia, sin resignar calidad. Trabajamos directo con fábrica y te pasamos el ahorro a vos, no al intermediario. Calidad premium que tu obra merece, al precio justo.</p>
+      <h2 class="dc-editorial-title">Precio <em>competitivo</em></h2>
+      <p>Al producir directamente, eliminamos intermediarios y trasladamos ese ahorro al cliente final. Ofrecemos hasta un 20% por debajo del precio de mercado, sin comprometer la calidad ni el rendimiento de nuestras pinturas.</p>
     </div>
   </div>
 
   <div class="dc-editorial-block reverse">
-    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=90&auto=format&fm=webp');"></div>
+    <div class="dc-editorial-img" style="background-image: url('https://images.unsplash.com/photo-1604335398980-ededcadcc35a?w=1800&q=90&auto=format&fm=webp');"></div>
     <div class="dc-editorial-text">
       <div class="dc-editorial-tag">Capítulo 04</div>
-      <h2 class="dc-editorial-title">Producto <em>fresco</em></h2>
-      <p>Stock que rota constantemente. No vendemos pintura vieja parada en depósito. Renovamos inventario todas las semanas para que cada producto que sale de nuestro local esté en su punto óptimo de aplicación.</p>
+      <h2 class="dc-editorial-title">Producción <em>continua</em></h2>
+      <p>Mantenemos una rotación de stock constante para asegurar que cada producto llegue a tus manos en condiciones óptimas de aplicación. Trabajamos con ciclos de producción semanales que garantizan frescura y máximo rendimiento.</p>
     </div>
   </div>
 
@@ -287,18 +426,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 
 <section class="dc-cta-section">
   <h2 class="fade-in">¿Necesitás <em>asesoramiento</em>?</h2>
-  <p class="fade-in">Escribinos por WhatsApp y te ayudamos a elegir el producto justo para tu obra</p>
+  <p class="fade-in">Contactanos por WhatsApp y nuestro equipo técnico te ayudará a elegir el producto adecuado</p>
   <a href="https://wa.me/5493413113046" class="dc-cta-btn fade-in">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
     Hablar por WhatsApp
   </a>
 </section>
 
-<section class="dc-location">
+<section class="dc-location" id="ubicacion">
   <div class="dc-location-intro fade-in">
     <div class="dc-location-tag">Visitanos</div>
     <h2 class="dc-location-title">Dónde <em>encontrarnos</em></h2>
-    <p class="dc-location-desc">Te esperamos en el local de Rosario</p>
+    <p class="dc-location-desc">Te esperamos en nuestro local de Rosario</p>
   </div>
 
   <div class="dc-location-info">
@@ -322,9 +461,71 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 </section>
 
 <footer class="dc-footer">
-  <div class="dc-footer-logo"><strong>DIN</strong>COLOR</div>
-  <div class="dc-footer-divider"></div>
-  <div class="dc-copy">© 2026 · Pinturerías Dincolor · Rosario</div>
+  <div class="dc-footer-grid">
+    <div class="dc-footer-col">
+      <div class="dc-footer-brand"><strong>DIN</strong>COLOR</div>
+      <p class="dc-footer-desc">Pinturerías Dincolor. Más de 48 años fabricando y comercializando pinturas de calidad premium en Rosario.</p>
+      <div class="dc-footer-social">
+        <a href="https://www.instagram.com/" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+        </a>
+        <a href="https://wa.me/5493413113046" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="dc-footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#categorias">Categorías</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="ofertas.html">Ofertas</a></li>
+      </ul>
+    </div>
+
+    <div class="dc-footer-col">
+      <h4>Productos</h4>
+      <ul>
+        <li><a href="hogar.html">Hogar y Obra</a></li>
+        <li><a href="maderas.html">Maderas</a></li>
+        <li><a href="nautica.html">Náutica</a></li>
+        <li><a href="industria.html">Industria</a></li>
+        <li><a href="automotor.html">Automotor</a></li>
+        <li><a href="herramientas.html">Herramientas</a></li>
+        <li><a href="accesorios.html">Accesorios</a></li>
+      </ul>
+    </div>
+
+    <div class="dc-footer-col">
+      <h4>Contacto</h4>
+      <div class="dc-footer-contact-item">
+        <strong>Dirección</strong>
+        San Nicolás 2949<br>Rosario, Santa Fe
+      </div>
+      <div class="dc-footer-contact-item">
+        <strong>Teléfono</strong>
+        <a href="tel:+5493417760680">+54 341 776-0680</a>
+      </div>
+      <div class="dc-footer-contact-item">
+        <strong>Horario</strong>
+        Lun a Vie 8 — 12:15 / 14 — 18:30<br>Sáb 8 — 12:30
+      </div>
+    </div>
+  </div>
+
+  <div class="dc-footer-bottom">
+    <div class="dc-copy">© 2026 · Pinturerías Dincolor</div>
+    <div class="dc-footer-legal">
+      <a href="#">Términos</a>
+      <a href="#">Privacidad</a>
+    </div>
+  </div>
 </footer>
 
 <a href="https://wa.me/5493413113046" class="dc-wa" aria-label="WhatsApp">
@@ -337,6 +538,33 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 80) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
 });
+
+// SIDEBAR
+const burger = document.getElementById('burger');
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarClose = document.getElementById('sidebarClose');
+
+function openSidebar() {
+  sidebar.classList.add('active');
+  sidebarOverlay.classList.add('active');
+  document.body.classList.add('menu-open');
+}
+function closeSidebar() {
+  sidebar.classList.remove('active');
+  sidebarOverlay.classList.remove('active');
+  document.body.classList.remove('menu-open');
+}
+
+burger.addEventListener('click', openSidebar);
+sidebarClose.addEventListener('click', closeSidebar);
+sidebarOverlay.addEventListener('click', closeSidebar);
+document.querySelectorAll('.dc-sidebar-link').forEach(link => {
+  if (link.getAttribute('href').startsWith('#')) {
+    link.addEventListener('click', closeSidebar);
+  }
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
@@ -370,3 +598,4 @@ if (statsSection) counterObserver.observe(statsSection);
 
 </body>
 </html>
+
