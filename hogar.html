@@ -6,20 +6,22 @@
 <title>Hogar y Obra - Dincolor</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1A1A1A; line-height: 1.6; background: #fff; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1A1A1A; line-height: 1.6; background: #fff; }
 
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes cartBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
-.dc-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid #eee; }
-.dc-header-logo { font-size: 20px; font-weight: 800; letter-spacing: 3px; color: #1A1A1A; text-decoration: none; }
-.dc-header-back { display: flex; align-items: center; gap: 8px; color: #666; text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s ease; }
+.dc-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid #f0f0f0; }
+.dc-header-back { display: flex; align-items: center; gap: 8px; color: #666; text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s ease; }
 .dc-header-back:hover { color: #4A2D5C; }
 .dc-header-back svg { width: 16px; height: 16px; }
+.dc-header-logo { font-size: 20px; font-weight: 800; letter-spacing: 3px; color: #1A1A1A; text-decoration: none; }
 .dc-header-actions { display: flex; align-items: center; gap: 20px; }
 .dc-cart-btn { position: relative; background: none; border: none; cursor: pointer; padding: 8px; color: #1A1A1A; }
 .dc-cart-btn svg { width: 24px; height: 24px; }
+.dc-cart-btn.bounce { animation: cartBounce 0.4s ease; }
 .dc-cart-count { position: absolute; top: 0; right: 0; background: #4A2D5C; color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.dc-cart-count.hidden { display: none; }
 
 .dc-cat-header { padding: 140px 40px 60px; text-align: center; background: #fafafa; border-bottom: 1px solid #eee; }
 .dc-cat-tag { font-size: 11px; letter-spacing: 5px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 14px; }
@@ -29,70 +31,74 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 
 .dc-products { padding: 60px 40px 100px; max-width: 1400px; margin: 0 auto; }
 .dc-products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-.dc-product { position: relative; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+
+.dc-product { position: relative; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; cursor: pointer; text-decoration: none; color: inherit; display: block; }
 .dc-product.visible { opacity: 1; transform: translateY(0); }
+.dc-product-img-wrap { position: relative; width: 100%; aspect-ratio: 1/1; background: #f5f5f5; border-radius: 4px; overflow: hidden; margin-bottom: 16px; }
+.dc-product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.dc-product:hover .dc-product-img { transform: scale(1.04); }
 
-.dc-product-img { position: relative; width: 100%; aspect-ratio: 1; background: #f5f5f5; border-radius: 4px; overflow: hidden; margin-bottom: 16px; cursor: pointer; }
-.dc-product-img-bg { position: absolute; inset: 0; background-size: cover; background-position: center; background-color: #e8e8e8; transition: transform 0.6s ease; }
-.dc-product:hover .dc-product-img-bg { transform: scale(1.05); }
+.dc-product-badge { position: absolute; top: 14px; left: 14px; background: #fff; color: #1A1A1A; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 6px 12px; border-radius: 50px; font-weight: 600; z-index: 2; }
 
-.dc-product-fav { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s ease; z-index: 2; }
-.dc-product-fav:hover { background: #fff; }
-.dc-product-fav svg { width: 16px; height: 16px; stroke: #1A1A1A; fill: none; stroke-width: 1.5; }
-.dc-product-fav.active svg { fill: #4A2D5C; stroke: #4A2D5C; }
+.dc-product-overlay-agotado { position: absolute; inset: 0; background: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; z-index: 2; }
+.dc-product-overlay-agotado span { background: #1A1A1A; color: #fff; padding: 10px 24px; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; border-radius: 50px; }
 
-.dc-product-info { padding: 0 4px; }
-.dc-product-cat { font-size: 11px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
-.dc-product-name { font-size: 16px; font-weight: 500; color: #1A1A1A; margin-bottom: 6px; letter-spacing: 0.3px; }
-.dc-product-desc { font-size: 13px; color: #666; margin-bottom: 14px; min-height: 38px; }
+.dc-product-marca { font-size: 10px; letter-spacing: 3px; color: #999; text-transform: uppercase; margin-bottom: 6px; }
+.dc-product-nombre { font-size: 16px; font-weight: 500; color: #1A1A1A; margin-bottom: 6px; line-height: 1.3; }
+.dc-product-desc { font-size: 13px; color: #777; line-height: 1.5; }
 
-.dc-product-actions { display: flex; align-items: center; gap: 10px; }
-.dc-btn-cart { flex: 1; background: #1A1A1A; color: #fff; border: none; padding: 12px 16px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; cursor: pointer; border-radius: 50px; transition: all 0.3s ease; font-family: inherit; }
-.dc-btn-cart:hover { background: #4A2D5C; letter-spacing: 3px; }
-.dc-btn-cart.added { background: #25D366; }
-.dc-btn-consult { background: none; border: none; color: #666; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; padding: 8px; text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.3s ease; font-family: inherit; }
-.dc-btn-consult:hover { color: #4A2D5C; border-bottom-color: #4A2D5C; }
+.dc-loading { text-align: center; padding: 80px 20px; color: #999; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+.dc-empty { text-align: center; padding: 80px 20px; color: #999; font-size: 14px; }
 
-.dc-cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-.dc-cart-overlay.open { opacity: 1; pointer-events: auto; }
-.dc-cart-panel { position: fixed; top: 0; right: 0; width: 420px; max-width: 100%; height: 100vh; background: #fff; z-index: 201; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); display: flex; flex-direction: column; }
-.dc-cart-panel.open { transform: translateX(0); }
-.dc-cart-header { padding: 24px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-.dc-cart-title { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-.dc-cart-close { background: none; border: none; cursor: pointer; padding: 4px; }
-.dc-cart-close svg { width: 24px; height: 24px; }
-.dc-cart-body { flex: 1; overflow-y: auto; padding: 24px; }
-.dc-cart-empty { text-align: center; color: #999; padding: 60px 20px; font-size: 14px; }
+.dc-toast { position: fixed; bottom: 30px; left: 50%; transform: translate(-50%, 0); background: #1A1A1A; color: #fff; padding: 14px 24px; border-radius: 50px; font-size: 13px; z-index: 1000; display: flex; align-items: center; gap: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); animation: toastIn 0.3s ease; }
+.dc-toast svg { width: 18px; height: 18px; fill: #4ADE80; }
+
+.dc-cart-float { display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #1A1A1A; color: #fff; padding: 14px 20px; border-radius: 50px; text-decoration: none; z-index: 90; align-items: center; justify-content: space-between; box-shadow: 0 6px 20px rgba(0,0,0,0.25); font-size: 14px; font-weight: 500; }
+.dc-cart-float.show { display: flex; }
+.dc-cart-float .dc-cart-float-count { background: #4A2D5C; padding: 4px 10px; border-radius: 50px; font-size: 12px; font-weight: 700; }
+
+.dc-cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; z-index: 200; backdrop-filter: blur(4px); }
+.dc-cart-overlay.active { opacity: 1; visibility: visible; }
+.dc-cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; max-width: 90vw; background: #fff; z-index: 201; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: -4px 0 30px rgba(0,0,0,0.15); }
+.dc-cart-panel.active { transform: translateX(0); }
+.dc-cart-panel-header { padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+.dc-cart-panel-title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
+.dc-cart-panel-close { background: none; border: none; cursor: pointer; padding: 6px; }
+.dc-cart-panel-close svg { width: 20px; height: 20px; }
+.dc-cart-panel-body { flex: 1; overflow-y: auto; padding: 20px 28px; }
+.dc-cart-empty { text-align: center; padding: 60px 20px; color: #999; font-size: 13px; }
 .dc-cart-item { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
-.dc-cart-item-img { width: 70px; height: 70px; background-size: cover; background-position: center; background-color: #f5f5f5; border-radius: 4px; flex-shrink: 0; }
-.dc-cart-item-info { flex: 1; }
-.dc-cart-item-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-.dc-cart-item-cat { font-size: 11px; color: #999; letter-spacing: 1px; text-transform: uppercase; }
-.dc-cart-item-remove { background: none; border: none; color: #999; cursor: pointer; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; padding: 0; }
-.dc-cart-item-remove:hover { color: #4A2D5C; }
-.dc-cart-footer { padding: 24px; border-top: 1px solid #eee; }
-.dc-cart-send { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #25D366; color: #fff; border: none; padding: 16px 20px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; cursor: pointer; border-radius: 50px; text-decoration: none; transition: all 0.3s ease; font-family: inherit; }
-.dc-cart-send:hover { background: #1faa54; letter-spacing: 3px; }
-.dc-cart-send svg { width: 20px; height: 20px; fill: currentColor; }
-.dc-cart-send.disabled { background: #ccc; pointer-events: none; }
-
-.dc-footer { background: #0F0F0F; color: #888; padding: 50px 24px 30px; text-align: center; font-size: 12px; }
-.dc-footer-logo { color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 10px; letter-spacing: 4px; }
-.dc-footer-line { color: #ccc; margin-bottom: 16px; letter-spacing: 1px; }
-.dc-copy { margin-top: 16px; color: #555; font-size: 11px; letter-spacing: 2px; }
+.dc-cart-item-img { width: 70px; height: 70px; border-radius: 4px; background: #f5f5f5; flex-shrink: 0; object-fit: cover; }
+.dc-cart-item-info { flex: 1; min-width: 0; }
+.dc-cart-item-marca { font-size: 9px; letter-spacing: 2px; color: #999; text-transform: uppercase; margin-bottom: 3px; }
+.dc-cart-item-nombre { font-size: 14px; font-weight: 500; margin-bottom: 4px; line-height: 1.3; }
+.dc-cart-item-meta { font-size: 12px; color: #666; margin-bottom: 8px; }
+.dc-cart-item-color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: middle; margin-right: 4px; border: 1px solid rgba(0,0,0,0.1); }
+.dc-cart-item-qty-row { display: flex; align-items: center; justify-content: space-between; }
+.dc-cart-item-qty { display: flex; align-items: center; gap: 8px; }
+.dc-cart-item-qty button { width: 24px; height: 24px; border: 1px solid #ddd; background: #fff; cursor: pointer; border-radius: 50%; font-size: 14px; }
+.dc-cart-item-qty button:hover { background: #f5f5f5; }
+.dc-cart-item-qty span { font-size: 13px; min-width: 20px; text-align: center; }
+.dc-cart-item-remove { background: none; border: none; cursor: pointer; color: #999; font-size: 11px; padding: 4px; }
+.dc-cart-item-remove:hover { color: #B82C2C; }
+.dc-cart-panel-footer { padding: 20px 28px; border-top: 1px solid #f0f0f0; }
+.dc-cart-total { display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 13px; color: #666; letter-spacing: 1px; }
+.dc-cart-total strong { color: #1A1A1A; font-weight: 600; }
+.dc-cart-checkout { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; background: #25D366; color: #fff; border: none; border-radius: 50px; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background 0.3s ease; }
+.dc-cart-checkout:hover { background: #1eb858; }
+.dc-cart-checkout:disabled { background: #ddd; cursor: not-allowed; }
+.dc-cart-checkout svg { width: 18px; height: 18px; fill: #fff; }
 
 @media (max-width: 700px) {
   .dc-header { padding: 14px 20px; }
-  .dc-header-logo { font-size: 16px; letter-spacing: 2px; }
   .dc-header-back span { display: none; }
+  .dc-header-logo { font-size: 16px; letter-spacing: 2px; }
   .dc-cat-header { padding: 100px 20px 40px; }
   .dc-cat-title { font-size: 32px; }
-  .dc-products { padding: 40px 20px 60px; }
-  .dc-products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .dc-product-name { font-size: 14px; }
+  .dc-products { padding: 40px 20px 120px; }
+  .dc-products-grid { gap: 20px; grid-template-columns: repeat(2, 1fr); }
+  .dc-product-nombre { font-size: 14px; }
   .dc-product-desc { font-size: 12px; }
-  .dc-btn-cart { font-size: 10px; padding: 10px 12px; }
-  .dc-btn-consult { font-size: 10px; }
 }
 </style>
 </head>
@@ -100,14 +106,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 
 <header class="dc-header">
   <a href="index.html" class="dc-header-back">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
     <span>Volver</span>
   </a>
   <a href="index.html" class="dc-header-logo">DINCOLOR</a>
   <div class="dc-header-actions">
-    <button class="dc-cart-btn" onclick="openCart()" aria-label="Carrito">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
-      <span class="dc-cart-count" id="cartCount">0</span>
+    <button class="dc-cart-btn" id="cartBtn" aria-label="Carrito">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="dc-cart-count hidden" id="cartCount">0</span>
     </button>
   </div>
 </header>
@@ -119,198 +125,75 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 </section>
 
 <section class="dc-products">
-  <div class="dc-products-grid">
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 1</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 1', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 1" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 2</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 2', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 2" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 3</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 3', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 3" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 4</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 4', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 4" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 5</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 5', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 5" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 6</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 6', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 6" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 7</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 7', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 7" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="dc-product">
-      <div class="dc-product-img"><div class="dc-product-img-bg" style="background-image: url('');"></div>
-      <button class="dc-product-fav" onclick="toggleFav(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button></div>
-      <div class="dc-product-info">
-        <div class="dc-product-cat">Línea Hogar</div>
-        <div class="dc-product-name">Producto 8</div>
-        <div class="dc-product-desc">Descripción corta del producto</div>
-        <div class="dc-product-actions">
-          <button class="dc-btn-cart" onclick="addToCart(this, 'Producto 8', 'Línea Hogar', '')">Agregar</button>
-          <a href="https://wa.me/5493413113046?text=Hola, quería consultar por Producto 8" class="dc-btn-consult">Consultar</a>
-        </div>
-      </div>
-    </div>
-
+  <div class="dc-products-grid" id="productsGrid">
+    <div class="dc-loading">Cargando productos...</div>
   </div>
 </section>
 
-<div class="dc-cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="dc-cart-panel" id="cartPanel">
-  <div class="dc-cart-header">
-    <div class="dc-cart-title">Mi consulta</div>
-    <button class="dc-cart-close" onclick="closeCart()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+<a href="#" class="dc-cart-float" id="cartFloat">
+  <span>Ver carrito</span>
+  <span class="dc-cart-float-count" id="cartFloatCount">0</span>
+</a>
+
+<div class="dc-cart-overlay" id="cartOverlay"></div>
+<aside class="dc-cart-panel" id="cartPanel">
+  <div class="dc-cart-panel-header">
+    <div class="dc-cart-panel-title">Tu pedido</div>
+    <button class="dc-cart-panel-close" id="cartClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
   </div>
-  <div class="dc-cart-body" id="cartBody">
-    <div class="dc-cart-empty">Todavía no agregaste productos</div>
+  <div class="dc-cart-panel-body" id="cartBody">
+    <div class="dc-cart-empty">Tu carrito está vacío</div>
   </div>
-  <div class="dc-cart-footer">
-    <a href="#" class="dc-cart-send disabled" id="cartSend" onclick="sendWhatsApp(event)">
+  <div class="dc-cart-panel-footer">
+    <div class="dc-cart-total">
+      <span>TOTAL DE ITEMS</span>
+      <strong id="cartTotalItems">0</strong>
+    </div>
+    <button class="dc-cart-checkout" id="cartCheckout" disabled>
       <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
-      Enviar consulta por WhatsApp
-    </a>
+      Enviar pedido por WhatsApp
+    </button>
   </div>
-</div>
+</aside>
 
-<footer class="dc-footer">
-  <div class="dc-footer-logo">DINCOLOR</div>
-  <div class="dc-footer-line">Pinturerías Dincolor · San Nicolás 2949, Rosario</div>
-  <div class="dc-copy">© 2026 DINCOLOR · TODOS LOS DERECHOS RESERVADOS</div>
-</footer>
-
+<script src="carrito.js"></script>
 <script>
-let cart = [];
+const grid = document.getElementById('productsGrid');
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.dc-product').forEach(el => observer.observe(el));
-
-function toggleFav(btn) { btn.classList.toggle('active'); }
-
-function addToCart(btn, name, category, img) {
-  cart.push({ name, category, img });
-  btn.textContent = 'Agregado ✓';
-  btn.classList.add('added');
-  setTimeout(() => { btn.textContent = 'Agregar'; btn.classList.remove('added'); }, 1500);
-  updateCart();
-}
-
-function removeFromCart(index) { cart.splice(index, 1); updateCart(); }
-
-function updateCart() {
-  document.getElementById('cartCount').textContent = cart.length;
-  const body = document.getElementById('cartBody');
-  const send = document.getElementById('cartSend');
-  if (cart.length === 0) {
-    body.innerHTML = '<div class="dc-cart-empty">Todavía no agregaste productos</div>';
-    send.classList.add('disabled');
-  } else {
-    body.innerHTML = cart.map((item, i) => `
-      <div class="dc-cart-item">
-        <div class="dc-cart-item-img" style="background-image: url('${item.img}');"></div>
-        <div class="dc-cart-item-info">
-          <div class="dc-cart-item-cat">${item.category}</div>
-          <div class="dc-cart-item-name">${item.name}</div>
-          <button class="dc-cart-item-remove" onclick="removeFromCart(${i})">Quitar</button>
+fetch('productos.json')
+  .then(r => r.json())
+  .then(data => {
+    const productosHogar = data.productos.filter(p => p.categoria === 'hogar');
+    if (productosHogar.length === 0) {
+      grid.innerHTML = '<div class="dc-empty">Próximamente nuevos productos</div>';
+      return;
+    }
+    grid.innerHTML = productosHogar.map(p => `
+      <a href="producto.html?id=${p.id}" class="dc-product">
+        <div class="dc-product-img-wrap">
+          ${p.destacado ? '<div class="dc-product-badge">Destacado</div>' : ''}
+          ${!p.disponible ? '<div class="dc-product-overlay-agotado"><span>Sin stock</span></div>' : ''}
+          <img src="${p.foto}" alt="${p.nombre} - ${p.marca}" class="dc-product-img" loading="lazy">
         </div>
-      </div>
+        <div class="dc-product-marca">${p.marca}</div>
+        <div class="dc-product-nombre">${p.nombre}</div>
+        <div class="dc-product-desc">${p.descripcionCorta}</div>
+      </a>
     `).join('');
-    send.classList.remove('disabled');
-  }
-}
-
-function openCart() { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartPanel').classList.add('open'); }
-function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartPanel').classList.remove('open'); }
-
-function sendWhatsApp(e) {
-  e.preventDefault();
-  if (cart.length === 0) return;
-  const text = 'Hola! Quería consultar por estos productos:\n\n' + cart.map((item, i) => `${i+1}. ${item.name} (${item.category})`).join('\n') + '\n\nGracias!';
-  window.open('https://wa.me/5493413113046?text=' + encodeURIComponent(text), '_blank');
-}
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.dc-product').forEach(el => observer.observe(el));
+  })
+  .catch(err => {
+    console.error(err);
+    grid.innerHTML = '<div class="dc-empty">Error cargando productos</div>';
+  });
 </script>
 
 </body>
 </html>
+
