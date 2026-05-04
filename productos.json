@@ -1,0 +1,77 @@
+{
+  "productos": [
+    {
+      "id": "look-frente-impermeable",
+      "nombre": "Look Frente Impermeable Látex",
+      "marca": "Emapi",
+      "categoria": "hogar",
+      "descripcionCorta": "Látex impermeable para frentes con alta resistencia y durabilidad",
+      "descripcionLarga": "Pintura látex para exteriores formulada para brindar máxima protección en frentes y superficies expuestas. Ofrece excelente resistencia a los factores climáticos, gran poder cubritivo y durabilidad prolongada. Su tecnología impermeable ayuda a prevenir filtraciones, manteniendo las superficies protegidas y con un acabado uniforme por más tiempo.",
+      "foto": "img/productos/hogar/look-frente-impermeable.jpg",
+      "presentaciones": ["1L", "4L", "10L", "20L"],
+      "colores": [
+        {"nombre": "Amarillo Puro", "hex": "#F5C518"},
+        {"nombre": "Ocre Puro", "hex": "#C68E3F"},
+        {"nombre": "Teja Puro", "hex": "#B5533C"},
+        {"nombre": "Rojo Puro", "hex": "#B82C2C"},
+        {"nombre": "Borgoña Puro", "hex": "#5C1F2B"},
+        {"nombre": "Cemento Puro", "hex": "#9A9A95"},
+        {"nombre": "Verde Puro", "hex": "#3E7A4B"},
+        {"nombre": "Azul Puro", "hex": "#2D4F8E"},
+        {"nombre": "Gris Puro", "hex": "#5A5A5A"},
+        {"nombre": "Negro Puro", "hex": "#1A1A1A"}
+      ],
+      "disponible": true,
+      "destacado": false
+    },
+    {
+      "id": "thermo-control-flex",
+      "nombre": "Thermo Control Flex",
+      "marca": "Colorín",
+      "categoria": "hogar",
+      "descripcionCorta": "Revestimiento impermeabilizante poliuretánico para frentes",
+      "descripcionLarga": "Revestimiento impermeabilizante de alta performance, formulado con poliuretano para brindar máxima protección en frentes y superficies exteriores. Su excelente elasticidad le permite acompañar los movimientos de la superficie evitando fisuras y filtraciones. Ofrece gran resistencia a los factores climáticos, rayos UV y desgaste, logrando un acabado duradero, uniforme y de alto rendimiento. Ideal para renovar y proteger fachadas expuestas.",
+      "foto": "img/productos/hogar/thermo-control-flex.jpg",
+      "presentaciones": ["10L", "20L"],
+      "bases": ["T", "P", "A", "D"],
+      "disponible": true,
+      "destacado": false
+    },
+    {
+      "id": "emocion-satinado-blanco",
+      "nombre": "Emoción Látex Interior Satinado Blanco",
+      "marca": "Colorín",
+      "categoria": "hogar",
+      "descripcionCorta": "Pintura látex interior satinada, lavable y de acabado uniforme",
+      "descripcionLarga": "Pintura látex para interiores desarrollada para lograr acabados prolijos y duraderos en todo tipo de ambientes. Ofrece muy buen poder cubritivo, fácil aplicación y excelente nivelación, dejando una terminación uniforme. Es lavable y cuenta con fragancia agradable, ideal para espacios como livings, dormitorios y oficinas. Brinda una solución práctica y confiable para renovar y mantener interiores en perfecto estado.",
+      "foto": "img/productos/hogar/emocion-satinado-blanco.jpg",
+      "presentaciones": ["1L", "4L", "10L", "20L"],
+      "disponible": true,
+      "destacado": false
+    },
+    {
+      "id": "emocion-mate-blanco",
+      "nombre": "Emoción Látex Interior Mate Blanco",
+      "marca": "Colorín",
+      "categoria": "hogar",
+      "descripcionCorta": "Pintura látex interior mate, lavable y de acabado suave sin brillo",
+      "descripcionLarga": "Pintura látex para interiores con terminación mate, ideal para lograr superficies uniformes y elegantes sin reflejos. Ofrece muy buen poder cubritivo, fácil aplicación y excelente nivelación, ayudando a disimular imperfecciones en paredes y cielorrasos. Es lavable y cuenta con fragancia agradable, lo que la hace perfecta para ambientes como dormitorios, livings y espacios de uso diario.",
+      "foto": "img/productos/hogar/emocion-mate-blanco.jpg",
+      "presentaciones": ["1L", "4L", "10L", "20L"],
+      "disponible": true,
+      "destacado": false
+    },
+    {
+      "id": "recuplast-techos",
+      "nombre": "Recuplast Techos",
+      "marca": "Sinteplast",
+      "categoria": "hogar",
+      "descripcionCorta": "Impermeabilizante acrílico elastomérico para techos",
+      "descripcionLarga": "Impermeabilizante para techos formulado con tecnología elastomérica que brinda máxima protección contra filtraciones y condiciones climáticas exigentes. Su alta elasticidad le permite acompañar los movimientos de la superficie evitando la formación de grietas. Ofrece excelente adherencia, gran poder cubritivo y resistencia a los rayos UV, prolongando la vida útil del techo. Ideal para terrazas, losas y superficies expuestas que requieren una protección confiable y duradera.",
+      "foto": "img/productos/hogar/recuplast-techos.jpg",
+      "presentaciones": ["1L", "4L", "10L", "20L"],
+      "disponible": true,
+      "destacado": false
+    }
+  ]
+}
