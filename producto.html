@@ -1,1 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto - Dincolor</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1A1A1A; line-height: 1.6; background: #fff; }
+
+@keyframes cartBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+.dc-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid #f0f0f0; }
+.dc-header-back { display: flex; align-items: center; gap: 8px; color: #666; text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s ease; }
+.dc-header-back:hover { color: #4A2D5C; }
+.dc-header-back svg { width: 16px; height: 16px; }
+.dc-header-logo { font-size: 20px; font-weight: 800; letter-spacing: 3px; color: #1A1A1A; text-decoration: none; }
+.dc-header-actions { display: flex; align-items: center; gap: 20px; }
+.dc-cart-btn { position: relative; background: none; border: none; cursor: pointer; padding: 8px; color: #1A1A1A; }
+.dc-cart-btn svg { width: 24px; height: 24px; }
+.dc-cart-btn.bounce { animation: cartBounce 0.4s ease; }
+.dc-cart-count { position: absolute; top: 0; right: 0; background: #4A2D5C; color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.dc-cart-count.hidden { display: none; }
+
+.dc-product-page { padding-top: 80px; max-width: 1300px; margin: 0 auto; }
+.dc-product-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; padding: 40px; }
+
+.dc-product-img-section { position: sticky; top: 100px; align-self: start; }
+.dc-product-img-main { width: 100%; aspect-ratio: 1/1; background: #f5f5f5; border-radius: 4px; overflow: hidden; }
+.dc-product-img-main img { width: 100%; height: 100%; object-fit: cover; }
+
+.dc-product-info { padding: 20px 0; }
+.dc-product-marca { font-size: 11px; letter-spacing: 4px; color: #4A2D5C; text-transform: uppercase; margin-bottom: 14px; }
+.dc-product-nombre { font-size: 36px; font-weight: 300; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 16px; }
+.dc-product-desc-corta { font-size: 16px; color: #555; margin-bottom: 32px; line-height: 1.6; }
+
+.dc-section { margin-bottom: 28px; }
+.dc-section-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #1A1A1A; font-weight: 600; margin-bottom: 14px; }
+
+.dc-presentaciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.dc-presentacion-btn { padding: 12px 24px; border: 1.5px solid #ddd; background: #fff; border-radius: 50px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.2s ease; min-width: 70px; }
+.dc-presentacion-btn:hover { border-color: #1A1A1A; }
+.dc-presentacion-btn.active { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+
+.dc-bases { display: flex; flex-wrap: wrap; gap: 10px; }
+.dc-base-btn { width: 48px; height: 48px; border: 1.5px solid #ddd; background: #fff; border-radius: 50%; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s ease; }
+.dc-base-btn:hover { border-color: #1A1A1A; }
+.dc-base-btn.active { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+
+.dc-colores { display: flex; flex-wrap: wrap; gap: 12px; }
+.dc-color-btn { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; outline: 1.5px solid #ddd; transition: all 0.2s ease; }
+.dc-color-btn:hover { outline-color: #1A1A1A; }
+.dc-color-btn.active { outline: 2px solid #1A1A1A; outline-offset: 2px; }
+.dc-color-nombre { font-size: 12px; color: #666; margin-top: 10px; min-height: 18px; }
+
+.dc-cantidad { display: flex; align-items: center; gap: 0; border: 1.5px solid #ddd; border-radius: 50px; width: fit-content; overflow: hidden; }
+.dc-cantidad button { width: 44px; height: 44px; border: none; background: #fff; cursor: pointer; font-size: 18px; transition: background 0.2s ease; }
+.dc-cantidad button:hover { background: #f5f5f5; }
+.dc-cantidad span { padding: 0 20px; font-size: 15px; font-weight: 500; min-width: 40px; text-align: center; }
+
+.dc-acciones { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+.dc-btn-agregar { padding: 18px; background: #1A1A1A; color: #fff; border: none; border-radius: 50px; cursor: pointer; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; transition: background 0.3s ease; }
+.dc-btn-agregar:hover { background: #4A2D5C; }
+.dc-btn-agregar:disabled { background: #ccc; cursor: not-allowed; }
+.dc-btn-consultar { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; background: #fff; color: #25D366; border: 1.5px solid #25D366; border-radius: 50px; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s ease; text-decoration: none; }
+.dc-btn-consultar:hover { background: #25D366; color: #fff; }
+.dc-btn-consultar svg { width: 18px; height: 18px; fill: currentColor; }
+
+.dc-product-desc-larga { padding: 50px 40px; background: #fafafa; border-top: 1px solid #eee; margin-top: 40px; }
+.dc-product-desc-larga-inner { max-width: 800px; margin: 0 auto; }
+.dc-product-desc-larga h3 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #4A2D5C; margin-bottom: 16px; font-weight: 600; }
+.dc-product-desc-larga p { font-size: 15px; color: #555; line-height: 1.8; }
+
+.dc-loading-page { padding: 200px 20px; text-align: center; color: #999; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+
+.dc-toast { position: fixed; bottom: 30px; left: 50%; transform: translate(-50%, 0); background: #1A1A1A; color: #fff; padding: 14px 24px; border-radius: 50px; font-size: 13px; z-index: 1000; display: flex; align-items: center; gap: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); animation: toastIn 0.3s ease; }
+.dc-toast svg { width: 18px; height: 18px; fill: #4ADE80; }
+
+.dc-cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; z-index: 200; backdrop-filter: blur(4px); }
+.dc-cart-overlay.active { opacity: 1; visibility: visible; }
+.dc-cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; max-width: 90vw; background: #fff; z-index: 201; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: -4px 0 30px rgba(0,0,0,0.15); }
+.dc-cart-panel.active { transform: translateX(0); }
+.dc-cart-panel-header { padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+.dc-cart-panel-title { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
+.dc-cart-panel-close { background: none; border: none; cursor: pointer; padding: 6px; }
+.dc-cart-panel-close svg { width: 20px; height: 20px; }
+.dc-cart-panel-body { flex: 1; overflow-y: auto; padding: 20px 28px; }
+.dc-cart-empty { text-align: center; padding: 60px 20px; color: #999; font-size: 13px; }
+.dc-cart-item { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
+.dc-cart-item-img { width: 70px; height: 70px; border-radius: 4px; background: #f5f5f5; flex-shrink: 0; object-fit: cover; }
+.dc-cart-item-info { flex: 1; min-width: 0; }
+.dc-cart-item-marca { font-size: 9px; letter-spacing: 2px; color: #999; text-transform: uppercase; margin-bottom: 3px; }
+.dc-cart-item-nombre { font-size: 14px; font-weight: 500; margin-bottom: 4px; line-height: 1.3; }
+.dc-cart-item-meta { font-size: 12px; color: #666; margin-bottom: 8px; }
+.dc-cart-item-color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: middle; margin-right: 4px; border: 1px solid rgba(0,0,0,0.1); }
+.dc-cart-item-qty-row { display: flex; align-items: center; justify-content: space-between; }
+.dc-cart-item-qty { display: flex; align-items: center; gap: 8px; }
+.dc-cart-item-qty button { width: 24px; height: 24px; border: 1px solid #ddd; background: #fff; cursor: pointer; border-radius: 50%; font-size: 14px; }
+.dc-cart-item-qty button:hover { background: #f5f5f5; }
+.dc-cart-item-qty span { font-size: 13px; min-width: 20px; text-align: center; }
+.dc-cart-item-remove { background: none; border: none; cursor: pointer; color: #999; font-size: 11px; padding: 4px; }
+.dc-cart-item-remove:hover { color: #B82C2C; }
+.dc-cart-panel-footer { padding: 20px 28px; border-top: 1px solid #f0f0f0; }
+.dc-cart-total { display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 13px; color: #666; letter-spacing: 1px; }
+.dc-cart-total strong { color: #1A1A1A; font-weight: 600; }
+.dc-cart-checkout { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; background: #25D366; color: #fff; border: none; border-radius: 50px; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background 0.3s ease; }
+.dc-cart-checkout:hover { background: #1eb858; }
+.dc-cart-checkout:disabled { background: #ddd; cursor: not-allowed; }
+.dc-cart-checkout svg { width: 18px; height: 18px; fill: #fff; }
+
+@media (max-width: 900px) {
+  .dc-product-grid { grid-template-columns: 1fr; gap: 30px; padding: 20px; }
+  .dc-product-img-section { position: relative; top: 0; }
+  .dc-product-nombre { font-size: 28px; }
+}
+
+@media (max-width: 700px) {
+  .dc-header { padding: 14px 20px; }
+  .dc-header-back span { display: none; }
+  .dc-header-logo { font-size: 16px; letter-spacing: 2px; }
+  .dc-product-page { padding-top: 70px; }
+  .dc-product-desc-larga { padding: 40px 20px; }
+}
+</style>
+</head>
+<body>
+
+<header class="dc-header">
+  <a href="hogar.html" class="dc-header-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <span>Volver</span>
+  </a>
+  <a href="index.html" class="dc-header-logo">DINCOLOR</a>
+  <div class="dc-header-actions">
+    <button class="dc-cart-btn" id="cartBtn" aria-label="Carrito">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="dc-cart-count hidden" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<div id="productContent">
+  <div class="dc-loading-page">Cargando producto...</div>
+</div>
+
+<div class="dc-cart-overlay" id="cartOverlay"></div>
+<aside class="dc-cart-panel" id="cartPanel">
+  <div class="dc-cart-panel-header">
+    <div class="dc-cart-panel-title">Tu pedido</div>
+    <button class="dc-cart-panel-close" id="cartClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="dc-cart-panel-body" id="cartBody">
+    <div class="dc-cart-empty">Tu carrito está vacío</div>
+  </div>
+  <div class="dc-cart-panel-footer">
+    <div class="dc-cart-total">
+      <span>TOTAL DE ITEMS</span>
+      <strong id="cartTotalItems">0</strong>
+    </div>
+    <button class="dc-cart-checkout" id="cartCheckout" disabled>
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+      Enviar pedido por WhatsApp
+    </button>
+  </div>
+</aside>
+
+<script src="carrito.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const productId = params.get('id');
+const content = document.getElementById('productContent');
+
+if (!productId) {
+  content.innerHTML = '<div class="dc-loading-page">Producto no encontrado</div>';
+} else {
+  fetch('productos.json')
+    .then(r => r.json())
+    .then(data => {
+      const p = data.productos.find(x => x.id === productId);
+      if (!p) {
+        content.innerHTML = '<div class="dc-loading-page">Producto no encontrado</div>';
+        return;
+      }
+      
+      const presentacionesHTML = p.presentaciones.map((pr, i) => 
+        `<button class="dc-presentacion-btn ${i === 0 ? 'active' : ''}" data-pres="${pr}">${pr}</button>`
+      ).join('');
+      
+      const basesHTML = p.bases ? `
+        <div class="dc-section">
+          <div class="dc-section-label">Base</div>
+          <div class="dc-bases">
+            ${p.bases.map((b, i) => `<button class="dc-base-btn ${i === 0 ? 'active' : ''}" data-base="${b}">${b}</button>`).join('')}
+          </div>
+        </div>
+      ` : '';
+      
+      const coloresHTML = p.colores ? `
+        <div class="dc-section">
+          <div class="dc-section-label">Color</div>
+          <div class="dc-colores">
+            ${p.colores.map((c, i) => `<button class="dc-color-btn ${i === 0 ? 'active' : ''}" data-color="${c.nombre}" data-hex="${c.hex}" style="background-color: ${c.hex};" title="${c.nombre}"></button>`).join('')}
+          </div>
+          <div class="dc-color-nombre" id="colorNombre">${p.colores[0].nombre}</div>
+        </div>
+      ` : '';
+      
+      content.innerHTML = `
+        <div class="dc-product-page">
+          <div class="dc-product-grid">
+            <div class="dc-product-img-section">
+              <div class="dc-product-img-main">
+                <img src="${p.foto}" alt="${p.nombre} - ${p.marca}">
+              </div>
+            </div>
+            <div class="dc-product-info">
+              <div class="dc-product-marca">${p.marca}</div>
+              <h1 class="dc-product-nombre">${p.nombre}</h1>
+              <p class="dc-product-desc-corta">${p.descripcionCorta}</p>
+              <div class="dc-section">
+                <div class="dc-section-label">Presentación</div>
+                <div class="dc-presentaciones">${presentacionesHTML}</div>
+              </div>
+              ${basesHTML}
+              ${coloresHTML}
+              <div class="dc-section">
+                <div class="dc-section-label">Cantidad</div>
+                <div class="dc-cantidad">
+                  <button id="qtyMinus">−</button>
+                  <span id="qtyValue">1</span>
+                  <button id="qtyPlus">+</button>
+                </div>
+              </div>
+              <div class="dc-acciones">
+                <button class="dc-btn-agregar" id="btnAgregar" ${!p.disponible ? 'disabled' : ''}>
+                  ${p.disponible ? 'Agregar al carrito' : 'Sin stock'}
+                </button>
+                <a href="#" class="dc-btn-consultar" id="btnConsultar">
+                  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+                  Consultar por WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="dc-product-desc-larga">
+            <div class="dc-product-desc-larga-inner">
+              <h3>Sobre el producto</h3>
+              <p>${p.descripcionLarga}</p>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.querySelectorAll('.dc-presentacion-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.dc-presentacion-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+      
+      document.querySelectorAll('.dc-base-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.dc-base-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+      
+      document.querySelectorAll('.dc-color-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.dc-color-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('colorNombre').textContent = btn.dataset.color;
+        });
+      });
+      
+      let qty = 1;
+      const qtyValue = document.getElementById('qtyValue');
+      document.getElementById('qtyMinus').addEventListener('click', () => {
+        if (qty > 1) { qty--; qtyValue.textContent = qty; }
+      });
+      document.getElementById('qtyPlus').addEventListener('click', () => {
+        qty++; qtyValue.textContent = qty;
+      });
+      
+      document.getElementById('btnAgregar').addEventListener('click', () => {
+        const presentacion = document.querySelector('.dc-presentacion-btn.active').dataset.pres;
+        const baseEl = document.querySelector('.dc-base-btn.active');
+        const colorEl = document.querySelector('.dc-color-btn.active');
+        
+        const item = {
+          id: p.id,
+          nombre: p.nombre,
+          marca: p.marca,
+          foto: p.foto,
+          presentacion: presentacion,
+          base: baseEl ? baseEl.dataset.base : null,
+          color: colorEl ? colorEl.dataset.color : null,
+          colorHex: colorEl ? colorEl.dataset.hex : null,
+          cantidad: qty
+        };
+        
+        addToCart(item);
+      });
+      
+      document.getElementById('btnConsultar').addEventListener('click', (e) => {
+        e.preventDefault();
+        const presentacion = document.querySelector('.dc-presentacion-btn.active').dataset.pres;
+        const baseEl = document.querySelector('.dc-base-btn.active');
+        const colorEl = document.querySelector('.dc-color-btn.active');
+        
+        let msg = `Hola! Quería consultar por:%0A%0A*${p.nombre}*%0AMarca: ${p.marca}%0APresentación: ${presentacion}`;
+        if (baseEl) msg += `%0ABase: ${baseEl.dataset.base}`;
+        if (colorEl) msg += `%0AColor: ${colorEl.dataset.color}`;
+        msg += `%0ACantidad: ${qty}`;
+        
+        window.open(`https://wa.me/5493413113046?text=${msg}`, '_blank');
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      content.innerHTML = '<div class="dc-loading-page">Error cargando producto</div>';
+    });
+}
+</script>
+
+</body>
+</html>
 
